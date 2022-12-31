@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <iostream>
+// For screen size constants
+#include <gl2d.h>
+
 #include "Player.h"
 #include "../Renderer.h"
 
@@ -11,7 +14,13 @@ Player::Player(Vector2 position, Vector2 size) {
 }
 
 bool Player::collidingWithPlanet(SpaceWorld world, Planet planet) {
-  PlanetPosition pPos = planetScreenPosition(world, planet, *this);
+  PlanetPosition plPos = planetScreenPosition(world, planet, *this);
+
+  int SCR_X_HALF = SCREEN_WIDTH / 2;
+  int SCR_Y_HALF = SCREEN_HEIGHT / 2;
+
+  return plPos.xMin < SCR_X_HALF && plPos.yMin < SCR_Y_HALF &&
+         plPos.xMax > SCR_X_HALF && plPos.yMax > SCR_Y_HALF;
 } 
 
 void Player::update(SpaceWorld world) {
@@ -36,8 +45,10 @@ void Player::update(SpaceWorld world) {
   cout << "Dist from planet: " << distFrom << endl;
   cout << "Planet X: " << closest.position.x << endl;
   cout << "Planet Y: " << closest.position.y << endl;
+  cout << "Planet size: " << closest.size.x << endl;
   cout << "Planet pull force: " << pullforce << endl << endl;
 
+  cout << "Player colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
   cout << "Player X pos: " << this->position.x << endl;;
   cout << "Player y pos: " << this->position.y << endl;
   cout << "Player X velocity: " << this->velocity.x << endl;

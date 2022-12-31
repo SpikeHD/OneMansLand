@@ -28,7 +28,7 @@ void gl2dInit() {
 
 void controlPlayer(Player &player, SpaceWorld &world) {
   // Offset the velocity accumulation by the zoom level, so we don't move gain lightspeed while zoomed in
-  float vel = 0.03 / world.zoomLevel;
+  float vel = 0.02 / world.zoomLevel;
 
   cout << "Keys pressed: ";
 
