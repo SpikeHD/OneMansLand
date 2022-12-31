@@ -10,7 +10,7 @@ void Entity::setYVelocity(float vel) {
 }
 
 void Entity::addXVelocity(float vel) {
-  this->velocity.x += std::clamp(vel, -maxVelocity, maxVelocity);;
+  this->velocity.x += std::clamp(vel, -maxVelocity, maxVelocity);
 }
 
 void Entity::addYVelocity(float vel) {

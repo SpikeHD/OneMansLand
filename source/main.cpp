@@ -1,6 +1,7 @@
 #include <nds.h>
 #include <gl2d.h>
 #include <stdio.h>
+#include <algorithm>
 
 // Our stuff
 #include "./controls.h"
@@ -24,7 +25,7 @@ void gl2dInit() {
 	glScreen2D();
 }
 
-void controlPlayer(Player &player) {
+void controlPlayer(Player &player, SpaceWorld &world) {
   if (btn_up()) {
     player.addYVelocity(-0.05);
   }
@@ -39,6 +40,16 @@ void controlPlayer(Player &player) {
 
   if (btn_left()) {
     player.addXVelocity(-0.05);
+  }
+
+  // Zooming in and out
+  if (btn_rbump()) {
+    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, 2.0f);
+  }
+
+  // Zooming in and out
+  if (btn_lbump()) {
+    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, 2.0f);
   }
 }
 
@@ -68,7 +79,7 @@ int main(void) {
   while(1) {
     // Scan for control presses
     scanKeys();
-    controlPlayer(player);
+    controlPlayer(player, world);
 
     glBegin2D();
 

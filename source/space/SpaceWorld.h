@@ -6,6 +6,7 @@
 
 class SpaceWorld {
   public:
+    float zoomLevel;
     std::vector<Planet> planets;
 
     SpaceWorld();
