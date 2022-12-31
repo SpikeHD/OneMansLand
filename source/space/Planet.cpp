@@ -23,6 +23,7 @@ int Planet::gravitationalFieldSize() {
 }
 
 void Planet::pull(Entity &entity) {
+  return;
   bool inField = this->isInField(entity);
   float pullforce = this->pullForce(entity);
 

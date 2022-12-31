@@ -15,11 +15,16 @@ void render(SpaceWorld world, Player player) {
   // Draw each planet
   for (Planet planet : world.planets) {
     Vector2 center = planet.position;
-    float size = planet.size.x;
-    float calcXMin = center.x + pScrPosX - pPosX - (size / 2);
-    float calcYMin = center.y + pScrPosY - pPosY - (size / 2);
-    float calcXMax = center.x + pScrPosX - pPosX + (size / 2);
-    float calcYMax = center.y + pScrPosY - pPosY + (size / 2);
+    Vector2 centerOffset {
+      (zoom * center.x) - pPosX * zoom,
+      (zoom * center.y) - pPosY * zoom
+    };
+
+    float size = planet.size.x * zoom;
+    float calcXMin = center.x + centerOffset.x + pScrPosX - pPosX - (size / 2);
+    float calcYMin = center.y + centerOffset.y + pScrPosY - pPosY - (size / 2);
+    float calcXMax = center.x + centerOffset.x + pScrPosX - pPosX + (size / 2);
+    float calcYMax = center.y + centerOffset.y + pScrPosY - pPosY + (size / 2);
 
     // Don't bother drawing if outside of screen
     if (

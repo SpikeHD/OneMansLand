@@ -50,13 +50,13 @@ void controlPlayer(Player &player, SpaceWorld &world) {
 
   // Zooming in and out
   if (btn_rbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, 2.0f);
+    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, 3.0f);
     cout << "RB ";
   }
 
   // Zooming in and out
   if (btn_lbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, 2.0f);
+    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, 3.0f);
     cout << "LB ";
   }
 
