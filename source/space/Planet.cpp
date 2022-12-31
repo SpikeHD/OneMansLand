@@ -6,6 +6,7 @@
 Planet::Planet(Vector2 position, float size, string name) {
   this->position = position;
   this->size = size;
+  this->name = name;
 }
 
 void Planet::generate() {
@@ -18,6 +19,21 @@ int Planet::gravitationalFieldSize() {
   return this->size * 3;
 }
 
+void Planet::pull(Entity &entity) {
+  bool inField = this->isInField(entity);
+  float pullforce = this->pullForce(entity);
+
+  if (!inField) pullforce = 0;
+
+  float xPullforce = pullforce;
+  float yPullforce = pullforce;
+
+  if (entity.position.x > this->position.x) xPullforce = -pullforce;
+  if (entity.position.y > this->position.y) yPullforce = -pullforce;
+
+  entity.addXVelocity(xPullforce);
+  entity.addYVelocity(yPullforce);
+}
 
 float Planet::distanceFrom(Entity entity) {
   return sqrtf(

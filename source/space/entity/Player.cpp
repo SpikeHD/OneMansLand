@@ -1,5 +1,6 @@
 #include "./Player.h"
 #include <stdio.h>
+#include <iostream>
 
 Player::Player(Vector2 position, Vector2 size) {
   this->position = position;
@@ -10,33 +11,35 @@ Player::Player(Vector2 position, Vector2 size) {
 
 void Player::update(SpaceWorld world) {
   // TODO find closeby planets and calc that way
-  Planet p = world.planets.at(0);
-  bool inField = p.isInField(*this);
-  float distFrom = p.distanceFrom(*this);
-  float pullforce = p.pullForce(*this);
+  Planet closest = world.planets.at(0);
 
-  if (!inField) pullforce = 0;
+  for (Planet p : world.planets) {
+    if (p.distanceFrom(*this) < closest.distanceFrom(*this)) {
+      closest = p;
+    }
 
-  float xPullforce = pullforce;
-  float yPullforce = pullforce;
+    if (p.isInField(*this)) {
+      p.pull(*this);
+    }
+  }
 
-  if (this->position.x > p.position.x) xPullforce = -pullforce;
-  if (this->position.y > p.position.y) yPullforce = -pullforce;
+  bool inField = closest.isInField(*this);
+  float distFrom = closest.distanceFrom(*this);
+  float pullforce = closest.pullForce(*this);
 
-  printf("Is in field?: %d\n", inField);
-  printf("Dist from planet: %.5f\n", distFrom);
-  printf("Planet X: %.5f\n", p.position.x);
-  printf("Planet Y: %.5f\n", p.position.y);
+  cout << "Closest planet:" << closest.name << endl;;
+  cout << "Is in field?: " << inField << endl;
+  cout << "Dist from planet: " << distFrom << endl;
+  cout << "Planet X: " << closest.position.x << endl;
+  cout << "Planet Y: " << closest.position.y << endl;
+  cout << "Planet pull force: " << pullforce << endl << endl;
 
-  printf("Player X pos: %.4f\n", this->position.x);
-  printf("Player y pos: %.4f\n", this->position.y);
-  printf("Player X velocity: %.4f\n", this->velocity.x);
-  printf("Player y velocity: %.4f\n", this->velocity.y);
+  cout << "Player X pos: " << this->position.x << endl;;
+  cout << "Player y pos: " << this->position.y << endl;
+  cout << "Player X velocity: " << this->velocity.x << endl;
+  cout << "Player y velocity: " << this->velocity.y << endl << endl;;
 
-  printf("Zoom level: %.4f\n", world.zoomLevel);
-
-  this->setXVelocity(this->velocity.x + xPullforce);
-  this->setYVelocity(this->velocity.y + yPullforce);
+  cout << "Zoom level: " << world.zoomLevel << endl;
 
   this->setXPosition(this->position.x + this->velocity.x);
   this->setYPosition(this->position.y + this->velocity.y);

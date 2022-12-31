@@ -20,6 +20,7 @@ class Planet {
     void generate();
 
     int gravitationalFieldSize();
+    void pull(Entity &);
     float distanceFrom(Entity);
     bool isInField(Entity);
     float pullForce(Entity);

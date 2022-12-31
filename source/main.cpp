@@ -1,6 +1,6 @@
 #include <nds.h>
 #include <gl2d.h>
-#include <stdio.h>
+#include <iostream>
 #include <algorithm>
 
 // Our stuff
@@ -26,31 +26,41 @@ void gl2dInit() {
 }
 
 void controlPlayer(Player &player, SpaceWorld &world) {
+  cout << "Keys pressed: ";
+
   if (btn_up()) {
     player.addYVelocity(-0.05);
+    cout << "U ";
   }
 
   if (btn_down()) {
     player.addYVelocity(0.05);
+    cout << "D ";
   }
 
   if (btn_right()) {
     player.addXVelocity(0.05);
+    cout << "R ";
   }
 
   if (btn_left()) {
     player.addXVelocity(-0.05);
+    cout << "L ";
   }
 
   // Zooming in and out
   if (btn_rbump()) {
     world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, 2.0f);
+    cout << "RB ";
   }
 
   // Zooming in and out
   if (btn_lbump()) {
     world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, 2.0f);
+    cout << "LB ";
   }
+
+  cout << endl;
 }
 
 int main(void) {

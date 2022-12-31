@@ -1,3 +1,5 @@
+#include <string>
+
 #include "./SpaceWorld.h"
 #include "../consts.h"
 
@@ -6,9 +8,16 @@ SpaceWorld::SpaceWorld() {
 }
 
 void SpaceWorld::generate() {
-  // TODO maake planets dynamically
-  Vector2 pPos = { 50, 50 };
-  Planet p = Planet(pPos, 20, "Planet 1");
+  // TODO make planets dynamically
+  int planets = rand() % 6 + 6;
 
-  this->planets.push_back(p);
+  for (int i = 0; i < planets; i++) {
+    Vector2 pos = {
+      rand() % 600 - 400,
+      rand() % 600 - 400
+    };
+
+    Planet p = Planet(pos, rand() % 20 + 10, string("Planet") + to_string(i));
+    this->planets.push_back(p);
+  }
 }
