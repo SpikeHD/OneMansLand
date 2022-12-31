@@ -8,12 +8,10 @@ using namespace std;
 #ifndef SPC_PLANET_H
 #define SPC_PLANET_H
 
-class Planet {
+class Planet : public Entity {
   public:
     string name;
-    Vector2 position;
     int seed;
-    float size;
 
     Planet(Vector2, float, string);
 

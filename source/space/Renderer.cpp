@@ -15,7 +15,7 @@ void render(SpaceWorld world, Player player) {
   // Draw each planet
   for (Planet planet : world.planets) {
     Vector2 center = planet.position;
-    float size = planet.size;
+    float size = planet.size.x;
     float calcXMin = center.x + pScrPosX - pPosX - (size / 2);
     float calcYMin = center.y + pScrPosY - pPosY - (size / 2);
     float calcXMax = center.x + pScrPosX - pPosX + (size / 2);

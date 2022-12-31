@@ -30,22 +30,22 @@ void controlPlayer(Player &player, SpaceWorld &world) {
 
   if (btn_up()) {
     player.addYVelocity(-0.05);
-    cout << "U ";
+    cout << "^ ";
   }
 
   if (btn_down()) {
     player.addYVelocity(0.05);
-    cout << "D ";
+    cout << "v ";
   }
 
   if (btn_right()) {
     player.addXVelocity(0.05);
-    cout << "R ";
+    cout << "> ";
   }
 
   if (btn_left()) {
     player.addXVelocity(-0.05);
-    cout << "L ";
+    cout << "< ";
   }
 
   // Zooming in and out
