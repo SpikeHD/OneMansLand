@@ -1,4 +1,4 @@
-#include "./Entity.h"
+#include "Entity.h"
 #include <algorithm>
 
 void Entity::setXVelocity(float vel) {

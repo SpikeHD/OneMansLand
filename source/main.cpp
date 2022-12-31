@@ -4,11 +4,11 @@
 #include <algorithm>
 
 // Our stuff
-#include "./controls.h"
-#include "./space/entity/Player.h"
-#include "./space/Renderer.h"
-#include "./space/SpaceWorld.h"
-#include "./consts.h"
+#include "controls.h"
+#include "space/entity/Player.h"
+#include "space/Renderer.h"
+#include "space/SpaceWorld.h"
+#include "consts.h"
 
 volatile int frame = 0;
 
@@ -98,7 +98,6 @@ int main(void) {
     glBegin2D();
 
     render(world, player);
-
     player.update(world);
 
     glEnd2D();

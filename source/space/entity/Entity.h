@@ -1,7 +1,7 @@
+#include "./../../Vector.h"
+
 #ifndef SPC_ENTITY_H
 #define SPC_ENTITY_H
-
-#include "./../../Vector.h"
 
 using namespace std;
 

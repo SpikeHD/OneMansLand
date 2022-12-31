@@ -2,14 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "./Renderer.h"
-
-struct PlanetPosition {
-  float xMin;
-  float yMin;
-  float xMax;
-  float yMax;
-};
+#include "Renderer.h"
 
 /**
  * Show a triangle pointing to nearby offscreen planets

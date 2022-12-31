@@ -1,6 +1,7 @@
-#include "./Player.h"
 #include <stdio.h>
 #include <iostream>
+#include "Player.h"
+#include "../Renderer.h"
 
 Player::Player(Vector2 position, Vector2 size) {
   this->position = position;
@@ -9,8 +10,11 @@ Player::Player(Vector2 position, Vector2 size) {
   this->maxVelocity = 3;
 }
 
+bool Player::collidingWithPlanet(SpaceWorld world, Planet planet) {
+  PlanetPosition pPos = planetScreenPosition(world, planet, *this);
+} 
+
 void Player::update(SpaceWorld world) {
-  // TODO find closeby planets and calc that way
   Planet closest = world.planets.at(0);
 
   for (Planet p : world.planets) {

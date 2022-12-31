@@ -1,4 +1,4 @@
-#include "Planet.h"
+#include "entity/Planet.h"
 #include <vector>
 
 #ifndef SPC_WORLD_H

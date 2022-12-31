@@ -1,4 +1,4 @@
-#include "./controls.h"
+#include "controls.h"
 
 u32 kdr() {
 	return keysHeld();

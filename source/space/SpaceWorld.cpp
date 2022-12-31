@@ -1,6 +1,6 @@
 #include <string>
 
-#include "./SpaceWorld.h"
+#include "SpaceWorld.h"
 #include "../consts.h"
 
 SpaceWorld::SpaceWorld() {
