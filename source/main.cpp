@@ -8,6 +8,7 @@
 #include "./space/entity/Player.h"
 #include "./space/Renderer.h"
 #include "./space/SpaceWorld.h"
+#include "./consts.h"
 
 volatile int frame = 0;
 
@@ -26,37 +27,40 @@ void gl2dInit() {
 }
 
 void controlPlayer(Player &player, SpaceWorld &world) {
+  // Offset the velocity accumulation by the zoom level, so we don't move gain lightspeed while zoomed in
+  float vel = 0.03 / world.zoomLevel;
+
   cout << "Keys pressed: ";
 
   if (btn_up()) {
-    player.addYVelocity(-0.05);
+    player.addYVelocity(-vel);
     cout << "^ ";
   }
 
   if (btn_down()) {
-    player.addYVelocity(0.05);
+    player.addYVelocity(vel);
     cout << "v ";
   }
 
   if (btn_right()) {
-    player.addXVelocity(0.05);
+    player.addXVelocity(vel);
     cout << "> ";
   }
 
   if (btn_left()) {
-    player.addXVelocity(-0.05);
+    player.addXVelocity(-vel);
     cout << "< ";
   }
 
   // Zooming in and out
   if (btn_rbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, 3.0f);
+    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, ZOOM_MAX);
     cout << "RB ";
   }
 
   // Zooming in and out
   if (btn_lbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, 3.0f);
+    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, ZOOM_MAX);
     cout << "LB ";
   }
 
