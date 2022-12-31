@@ -20,11 +20,10 @@ void Planet::generate() {
 int Planet::gravitationalFieldSize() {
   // Based on the size, calculate the field size
   // This is just shittily calculated for now
-  return this->size.x * 3;
+  return this->size.x * 2;
 }
 
 void Planet::pull(Entity &entity) {
-  return;
   bool inField = this->isInField(entity);
   float pullforce = this->pullForce(entity);
 
@@ -64,5 +63,5 @@ float Planet::pullForce(Entity entity) {
   };
   float distBetween = this->distanceFrom(entity);
 
-  return 0.01 * ((approxSize * this->size.x) / distBetween);
+  return 0.001 * ((approxSize * this->size.x) / distBetween);
 }

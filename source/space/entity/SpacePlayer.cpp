@@ -10,6 +10,8 @@
 #include "../Renderer.h"
 #include "../../consts.h"
 
+// TODO < 0.2 velocity should be a acrash, less is aa landing
+
 SpacePlayer::SpacePlayer(Vector2 position, Vector2 size) {
   this->position = position;
   this->size = size;
@@ -93,11 +95,11 @@ void SpacePlayer::update(SpaceWorld world) {
   cout << "Planet size: " << closest.size.x << endl;
   cout << "Planet pull force: " << pullforce << endl << endl;
 
-  cout << "SpacePlayer colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
-  cout << "SpacePlayer X pos: " << this->position.x << endl;;
-  cout << "SpacePlayer y pos: " << this->position.y << endl;
-  cout << "SpacePlayer X velocity: " << this->velocity.x << endl;
-  cout << "SpacePlayer y velocity: " << this->velocity.y << endl << endl;;
+  cout << "Colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
+  cout << "Player X pos: " << this->position.x << endl;;
+  cout << "Player y pos: " << this->position.y << endl;
+  cout << "Player X velocity: " << this->velocity.x << endl;
+  cout << "Player y velocity: " << this->velocity.y << endl << endl;;
 
   cout << "Zoom level: " << world.zoomLevel << endl;
 

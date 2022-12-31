@@ -15,12 +15,12 @@ void SpaceWorld::generate() {
 
   for (int i = 0; i < planets; i++) {
     Vector2 pos = {
-      rand() % 600 - 400,
-      rand() % 600 - 400
+      rand() % 20000 - 10000,
+      rand() % 20000 - 10000
     };
     int color = RGB15(rand() % 255, rand() % 255, rand() % 255);
 
-    Planet p = Planet(pos, rand() % 20 + 10, string("Planet") + to_string(i), color);
+    Planet p = Planet(pos, rand() % 100 + 100, string("Planet") + to_string(i), color);
     this->planets.push_back(p);
   }
 }
