@@ -8,7 +8,7 @@
 #include "../../controls.h"
 #include "SpacePlayer.h"
 #include "../Renderer.h"
-#include "consts.h"
+#include "../../consts.h"
 
 SpacePlayer::SpacePlayer(Vector2 position, Vector2 size) {
   this->position = position;
