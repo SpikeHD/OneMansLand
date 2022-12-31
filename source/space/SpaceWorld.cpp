@@ -1,4 +1,5 @@
 #include <string>
+#include <gl2d.h>
 
 #include "SpaceWorld.h"
 #include "../consts.h"
@@ -17,8 +18,9 @@ void SpaceWorld::generate() {
       rand() % 600 - 400,
       rand() % 600 - 400
     };
+    int color = RGB15(rand() % 255, rand() % 255, rand() % 255);
 
-    Planet p = Planet(pos, rand() % 20 + 10, string("Planet") + to_string(i));
+    Planet p = Planet(pos, rand() % 20 + 10, string("Planet") + to_string(i), color);
     this->planets.push_back(p);
   }
 }

@@ -77,7 +77,7 @@ void render(SpaceWorld world, SpacePlayer player) {
       pos.yMin,
       pos.xMax,
       pos.yMax,
-      RGB15(0, 200, 0)
+      planet.color
     );
   }
 

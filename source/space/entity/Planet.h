@@ -12,8 +12,9 @@ class Planet : public Entity {
   public:
     string name;
     int seed;
+    int color;
 
-    Planet(Vector2, float, string);
+    Planet(Vector2, float, string, int);
 
     void generate();
 

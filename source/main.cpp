@@ -75,7 +75,6 @@ int main(void) {
       // TODO
     }
 
-
     glEnd2D();
 		glFlush(0);
 

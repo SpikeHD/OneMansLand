@@ -3,13 +3,14 @@
 #include "Planet.h"
 #include "Entity.h"
 
-Planet::Planet(Vector2 position, float size, string name) {
+Planet::Planet(Vector2 position, float size, string name, int color) {
   this->position = position;
   this->size = {
     size,
     size
   };
   this->name = name;
+  this->color = color;
 }
 
 void Planet::generate() {
