@@ -1,16 +1,19 @@
 #include <nds.h>
 #include <gl2d.h>
 #include <iostream>
-#include <algorithm>
 
 // Our stuff
 #include "controls.h"
-#include "space/entity/Player.h"
+#include "space/entity/SpacePlayer.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
-#include "consts.h"
 
 volatile int frame = 0;
+
+enum WorldState {
+  WS_SPACE,
+  WS_PLANET
+};
 
 void Vblank() {
   frame++;
@@ -26,48 +29,9 @@ void gl2dInit() {
 	glScreen2D();
 }
 
-void controlPlayer(Player &player, SpaceWorld &world) {
-  // Offset the velocity accumulation by the zoom level, so we don't move gain lightspeed while zoomed in
-  float vel = 0.02 / world.zoomLevel;
-
-  cout << "Keys pressed: ";
-
-  if (btn_up()) {
-    player.addYVelocity(-vel);
-    cout << "^ ";
-  }
-
-  if (btn_down()) {
-    player.addYVelocity(vel);
-    cout << "v ";
-  }
-
-  if (btn_right()) {
-    player.addXVelocity(vel);
-    cout << "> ";
-  }
-
-  if (btn_left()) {
-    player.addXVelocity(-vel);
-    cout << "< ";
-  }
-
-  // Zooming in and out
-  if (btn_rbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel + 0.05f, 1.0f, ZOOM_MAX);
-    cout << "RB ";
-  }
-
-  // Zooming in and out
-  if (btn_lbump()) {
-    world.zoomLevel = std::clamp(world.zoomLevel - 0.05f, 1.0f, ZOOM_MAX);
-    cout << "LB ";
-  }
-
-  cout << endl;
-}
-
 int main(void) {
+  WorldState state = WS_SPACE;
+
   Vector2 initialPos;
   initialPos.x = 0;
   initialPos.y = 0;
@@ -76,8 +40,8 @@ int main(void) {
   size.x = 5;
   size.y = 5;
 
-  // The player
-  Player player = Player(initialPos, size);
+  // The space player
+  SpacePlayer player = SpacePlayer(initialPos, size);
 
   // The spaceworld
   SpaceWorld world = SpaceWorld();
@@ -93,12 +57,24 @@ int main(void) {
   while(1) {
     // Scan for control presses
     scanKeys();
-    controlPlayer(player, world);
 
     glBegin2D();
 
-    render(world, player);
-    player.update(world);
+    // We have landed! Change the world state to begin rendering the planet surface stuffand handling controls differently
+    if (world.landedOnPlanet) {
+      state = WS_PLANET;
+    }
+
+    if (state == WS_SPACE) {
+      render(world, player);
+      player.control(world);
+      player.update(world);
+    }
+
+    if (state == WS_PLANET) {
+      // TODO
+    }
+
 
     glEnd2D();
 		glFlush(0);

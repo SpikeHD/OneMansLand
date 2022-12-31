@@ -5,6 +5,7 @@
 
 SpaceWorld::SpaceWorld() {
   this->zoomLevel = 1;
+  this->landedOnPlanet = false;
 }
 
 void SpaceWorld::generate() {

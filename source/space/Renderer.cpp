@@ -7,7 +7,7 @@
 /**
  * Show a triangle pointing to nearby offscreen planets
  */
-void renderPlanetTriangle(Planet planet, PlanetPosition pos, Player player) {
+void renderPlanetTriangle(Planet planet, PlanetPosition pos, SpacePlayer player) {
   Vector2 pCenter {
     pos.xMax - ((pos.xMax - pos.xMin) / 2),
     pos.yMax - ((pos.yMax - pos.yMin) / 2)
@@ -25,7 +25,7 @@ void renderPlanetTriangle(Planet planet, PlanetPosition pos, Player player) {
   glBoxFilled(tipX, tipY, tipX + size, tipY + size, RGB15(255,255,255));
 }
 
-PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, Player player) {
+PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, SpacePlayer player) {
   float zoom = world.zoomLevel;
 
   // To make a psuedo-camera, we render the player in the middle and the world in relativity to that
@@ -54,7 +54,7 @@ PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, Player play
   };
 }
 
-void render(SpaceWorld world, Player player) {
+void render(SpaceWorld world, SpacePlayer player) {
   // TODO: Do stuff with the world
 
   // Draw each planet

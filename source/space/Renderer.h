@@ -1,5 +1,5 @@
 #include "SpaceWorld.h"
-#include "entity/Player.h"
+#include "entity/SpacePlayer.h"
 
 #ifndef SPC_RENDER_H
 #define SPC_RENDER_H
@@ -11,7 +11,7 @@ struct PlanetPosition {
   float yMax;
 };
 
-void render(SpaceWorld, Player);
-PlanetPosition planetScreenPosition(SpaceWorld, Planet, Player);
+void render(SpaceWorld, SpacePlayer);
+PlanetPosition planetScreenPosition(SpaceWorld, Planet, SpacePlayer);
 
 #endif
