@@ -9,15 +9,16 @@ using namespace std;
 
 class SpacePlayer : public Entity {
   public:
+    float maxProjectiles = 1;
     Projectile proj;
+    std::vector<Projectile> projectiles;
 
     SpacePlayer(Vector2, Vector2);
 
     bool collidingWithPlanet(SpaceWorld, Planet);
-
     void control(SpaceWorld &);
-    void update(SpaceWorld);
-    Projectile shoot(int);
+    void update(SpaceWorld &);
+    void shoot(int);
 };
 
 #endif

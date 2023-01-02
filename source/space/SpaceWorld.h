@@ -8,11 +8,9 @@
 
 class SpaceWorld {
   public:
-    int maxProjectiles = 20;
     float zoomLevel;
     bool landedOnPlanet;
 
-    std::deque<Projectile> projectiles;
     std::vector<Planet> planets;
 
     SpaceWorld();

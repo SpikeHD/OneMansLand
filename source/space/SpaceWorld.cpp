@@ -28,11 +28,5 @@ void SpaceWorld::generate() {
 }
 
 void SpaceWorld::update() {
-  for (Projectile &proj : this->projectiles) {
-    if (this->maxProjectiles < this->projectiles.size()) {
-      this->projectiles.erase(this->projectiles.end());
-    }
 
-    proj.update();
-  }
 }

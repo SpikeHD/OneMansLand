@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-#include <cmath>
+#include <math.h>
 // For screen size constants
 #include <gl2d.h>
 #include <nds.h>
@@ -72,7 +72,7 @@ bool SpacePlayer::collidingWithPlanet(SpaceWorld world, Planet planet) {
          plPos.xMax > SCR_X_HALF && plPos.yMax > SCR_Y_HALF;
 }
 
-void SpacePlayer::update(SpaceWorld world) {
+void SpacePlayer::update(SpaceWorld &world) {
   Planet closest = world.planets.at(0);
 
   for (Planet p : world.planets) {
@@ -88,6 +88,18 @@ void SpacePlayer::update(SpaceWorld world) {
   bool inField = closest.isInField(*this);
   float distFrom = closest.distanceFrom(*this);
   float pullforce = closest.pullForce(*this);
+
+  // Projectile handling
+  for (Projectile &proj : this->projectiles) {
+    if (this->maxProjectiles < this->projectiles.size()) {
+      this->projectiles.erase(this->projectiles.begin());
+    }
+
+    cout << "update pvely" << proj.velocity.y << endl; 
+    cout << "update pposy" << proj.position.y << endl; 
+
+    proj.update();
+  }
 
   cout << "Closest planet:" << closest.name << endl;
   cout << "Dist from planet: " << distFrom << endl;
@@ -107,13 +119,13 @@ void SpacePlayer::update(SpaceWorld world) {
   this->setYPosition(this->position.y + this->velocity.y);
 }
 
-Projectile SpacePlayer::shoot(int angle) {
+void SpacePlayer::shoot(int angle) {
   // Create projectile entity from the base provided projectile
   Projectile newProj(this->proj);
 
   Vector2 vel = {
-    std::cos(angle) * newProj.speed,
-    std::sin(angle) * newProj.speed
+    cosf(angle) * newProj.speed,
+    sinf(angle) * newProj.speed
   };
 
   Vector2 pos = {
@@ -124,8 +136,8 @@ Projectile SpacePlayer::shoot(int angle) {
   newProj.setVelocity(vel);
   newProj.setPosition(pos);
 
-  //cout << "player pos x: " << this->position.x << endl;
+  //cout << "proj vel y: " << newProj.velocity.y << endl;
   //cout << "newproj pos x: " << newProj.position.x << endl;
 
-  return newProj;
+  // this->projectiles.push_back(newProj);
 }

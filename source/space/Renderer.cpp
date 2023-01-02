@@ -57,6 +57,25 @@ EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePla
 
 void render(SpaceWorld &world, SpacePlayer &player) {
   // TODO: Do stuff with the world
+  
+  // Draw projectiles
+  for (Projectile &proj : player.projectiles) {
+    EntityScreenPos pos = entityScreenPosition(world, proj, player);
+    
+    cout << "p1 name: " << proj.name << endl;
+    cout << "p1 xmin: " << pos.xMin << endl;
+    cout << "p1 xmax: " << pos.xMax << endl;
+    cout << "p1 pos y: " << proj.position.y << endl;
+    cout << "p1 vel y: " << proj.velocity.y << endl;
+
+    glBoxFilled(
+      pos.xMin,
+      pos.yMin,
+      pos.xMax,
+      pos.yMax,
+      proj.color
+    );
+  }
 
   // Draw each planet
   for (Planet &planet : world.planets) {
@@ -79,19 +98,6 @@ void render(SpaceWorld &world, SpacePlayer &player) {
       plPos.xMax,
       plPos.yMax,
       planet.color
-    );
-  }
-
-  // Draw projectiles
-  for (Projectile &proj : world.projectiles) {
-    EntityScreenPos pos = entityScreenPosition(world, proj, player);
-
-    glBoxFilled(
-      pos.xMin,
-      pos.yMin,
-      pos.xMax,
-      pos.yMax,
-      proj.color
     );
   }
 

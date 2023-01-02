@@ -98,16 +98,7 @@ int main(void) {
     }
 
     if (state == WS_SPACE) {
-      cout << "World projectiles: " << world.projectiles.size() << endl;
-
-      if (world.projectiles.size() > 0) {
-        Projectile p1 = world.projectiles.at(0);
-
-        cout << "p1 name: " << p1.name << endl;
-        cout << "p1 X: " << p1.position.x << endl;
-        cout << "p1 vX: " << p1.velocity.x << endl;
-        cout << "p1 sizeX: " << p1.size.x << endl;
-      }
+      cout << "World projectiles: " << player.projectiles.size() << endl;
 
       render(world, player);
 
@@ -123,10 +114,8 @@ int main(void) {
         };
 
         int angle = std::atan2(touchXY.px - center.x, touchXY.py - center.y);
-
-        world.projectiles.push_back(
-          player.shoot(angle)
-        );
+        
+        // player.shoot(angle);
       }
     }
 
