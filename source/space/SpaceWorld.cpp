@@ -4,6 +4,8 @@
 #include "SpaceWorld.h"
 #include "../consts.h"
 
+#include <iostream>
+
 SpaceWorld::SpaceWorld() {
   this->zoomLevel = 1;
   this->landedOnPlanet = false;
@@ -22,5 +24,15 @@ void SpaceWorld::generate() {
 
     Planet p = Planet(pos, rand() % 100 + 100, string("Planet") + to_string(i), color);
     this->planets.push_back(p);
+  }
+}
+
+void SpaceWorld::update() {
+  for (Projectile &proj : this->projectiles) {
+    if (this->maxProjectiles < this->projectiles.size()) {
+      this->projectiles.erase(this->projectiles.end());
+    }
+
+    proj.update();
   }
 }

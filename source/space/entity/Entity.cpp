@@ -9,6 +9,10 @@ void Entity::setYVelocity(float vel) {
   this->velocity.y = vel;
 }
 
+void Entity::setVelocity(Vector2 vel) {
+  this->velocity = vel;
+}
+
 void Entity::addXVelocity(float vel) {
   this->velocity.x += std::clamp(vel, -maxVelocity, maxVelocity);
 }
@@ -28,4 +32,8 @@ void Entity::setXPosition(float pos) {
 
 void Entity::setYPosition(float pos) {
   this->position.y = pos;
+}
+
+void Entity::setPosition(Vector2 pos) {
+  this->position = pos;
 }

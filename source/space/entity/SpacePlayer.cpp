@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <cmath>
 // For screen size constants
 #include <gl2d.h>
 #include <nds.h>
@@ -10,13 +11,14 @@
 #include "../Renderer.h"
 #include "../../consts.h"
 
-// TODO < 0.2 velocity should be a acrash, less is aa landing
+// TODO < 0.2 velocity should be a acrash, less is a landing
 
 SpacePlayer::SpacePlayer(Vector2 position, Vector2 size) {
   this->position = position;
   this->size = size;
 
   this->maxVelocity = 3;
+  this->color = RGB15(255,255,255);
 }
 
 void SpacePlayer::control(SpaceWorld &world) {
@@ -61,7 +63,7 @@ void SpacePlayer::control(SpaceWorld &world) {
 }
 
 bool SpacePlayer::collidingWithPlanet(SpaceWorld world, Planet planet) {
-  PlanetPosition plPos = planetScreenPosition(world, planet, *this);
+  EntityScreenPos plPos = entityScreenPosition(world, planet, *this);
 
   int SCR_X_HALF = SCREEN_WIDTH / 2;
   int SCR_Y_HALF = SCREEN_HEIGHT / 2;
@@ -87,22 +89,43 @@ void SpacePlayer::update(SpaceWorld world) {
   float distFrom = closest.distanceFrom(*this);
   float pullforce = closest.pullForce(*this);
 
-  cout << "Closest planet:" << closest.name << endl;;
-  cout << "Is in field?: " << inField << endl;
+  cout << "Closest planet:" << closest.name << endl;
   cout << "Dist from planet: " << distFrom << endl;
   cout << "Planet X: " << closest.position.x << endl;
   cout << "Planet Y: " << closest.position.y << endl;
   cout << "Planet size: " << closest.size.x << endl;
-  cout << "Planet pull force: " << pullforce << endl << endl;
 
   cout << "Colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
-  cout << "Player X pos: " << this->position.x << endl;;
+  cout << "Player X pos: " << this->position.x << endl;
   cout << "Player y pos: " << this->position.y << endl;
   cout << "Player X velocity: " << this->velocity.x << endl;
-  cout << "Player y velocity: " << this->velocity.y << endl << endl;;
+  cout << "Player y velocity: " << this->velocity.y << endl << endl;
 
   cout << "Zoom level: " << world.zoomLevel << endl;
 
   this->setXPosition(this->position.x + this->velocity.x);
   this->setYPosition(this->position.y + this->velocity.y);
+}
+
+Projectile SpacePlayer::shoot(int angle) {
+  // Create projectile entity from the base provided projectile
+  Projectile newProj(this->proj);
+
+  Vector2 vel = {
+    std::cos(angle) * newProj.speed,
+    std::sin(angle) * newProj.speed
+  };
+
+  Vector2 pos = {
+    this->position.x,
+    this->position.y
+  };
+
+  newProj.setVelocity(vel);
+  newProj.setPosition(pos);
+
+  //cout << "player pos x: " << this->position.x << endl;
+  //cout << "newproj pos x: " << newProj.position.x << endl;
+
+  return newProj;
 }

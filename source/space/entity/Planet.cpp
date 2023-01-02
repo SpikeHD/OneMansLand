@@ -57,10 +57,6 @@ bool Planet::isInField(Entity entity) {
 float Planet::pullForce(Entity entity) {
   // formula: F = G * (m1 * m2) / r2
   float approxSize = sqrtf(entity.size.x + entity.size.y);
-  Vector2 centerOfEntity = {
-    entity.position.x + (approxSize / 2),
-    entity.position.y + (approxSize / 2)
-  };
   float distBetween = this->distanceFrom(entity);
 
   return 0.001 * ((approxSize * this->size.x) / distBetween);

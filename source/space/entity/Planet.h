@@ -10,13 +10,13 @@ using namespace std;
 
 class Planet : public Entity {
   public:
-    string name;
     int seed;
     int color;
 
     Planet(Vector2, float, string, int);
 
     void generate();
+    void update() {};
 
     int gravitationalFieldSize();
     void pull(Entity &);

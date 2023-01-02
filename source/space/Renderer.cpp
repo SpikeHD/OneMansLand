@@ -7,7 +7,7 @@
 /**
  * Show a triangle pointing to nearby offscreen planets
  */
-void renderPlanetTriangle(Planet planet, PlanetPosition pos, SpacePlayer player) {
+void renderPlanetTriangle(Planet &planet, EntityScreenPos &pos, SpacePlayer &player) {
   Vector2 pCenter {
     pos.xMax - ((pos.xMax - pos.xMin) / 2),
     pos.yMax - ((pos.yMax - pos.yMin) / 2)
@@ -25,7 +25,7 @@ void renderPlanetTriangle(Planet planet, PlanetPosition pos, SpacePlayer player)
   glBoxFilled(tipX, tipY, tipX + size, tipY + size, RGB15(255,255,255));
 }
 
-PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, SpacePlayer player) {
+EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePlayer &player) {
   float zoom = world.zoomLevel;
 
   // To make a psuedo-camera, we render the player in the middle and the world in relativity to that
@@ -34,19 +34,20 @@ PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, SpacePlayer
   float pScrPosX = (SCREEN_WIDTH / 2);
   float pScrPosY = (SCREEN_HEIGHT / 2);
 
-  Vector2 center = planet.position;
+  Vector2 center = entity.position;
   Vector2 centerOffset {
     (zoom * center.x) - pPosX * zoom,
     (zoom * center.y) - pPosY * zoom
   };
 
-  float size = planet.size.x * zoom;
-  float calcXMin = center.x + centerOffset.x + pScrPosX - pPosX - (size / 2);
-  float calcYMin = center.y + centerOffset.y + pScrPosY - pPosY - (size / 2);
-  float calcXMax = center.x + centerOffset.x + pScrPosX - pPosX + (size / 2);
-  float calcYMax = center.y + centerOffset.y + pScrPosY - pPosY + (size / 2);
+  float sizeX = entity.size.x * zoom;
+  float sizeY = entity.size.y * zoom;
+  float calcXMin = center.x + centerOffset.x + pScrPosX - pPosX - (sizeX / 2);
+  float calcYMin = center.y + centerOffset.y + pScrPosY - pPosY - (sizeY / 2);
+  float calcXMax = center.x + centerOffset.x + pScrPosX - pPosX + (sizeX / 2);
+  float calcYMax = center.y + centerOffset.y + pScrPosY - pPosY + (sizeY / 2);
 
-  return PlanetPosition {
+  return EntityScreenPos {
     calcXMin,
     calcYMin,
     calcXMax,
@@ -54,30 +55,43 @@ PlanetPosition planetScreenPosition(SpaceWorld world, Planet planet, SpacePlayer
   };
 }
 
-void render(SpaceWorld world, SpacePlayer player) {
+void render(SpaceWorld &world, SpacePlayer &player) {
   // TODO: Do stuff with the world
 
   // Draw each planet
-  for (Planet planet : world.planets) {
-    PlanetPosition pos = planetScreenPosition(world, planet, player);
+  for (Planet &planet : world.planets) {
+    EntityScreenPos plPos = entityScreenPosition(world, planet, player);
 
     // Don't bother drawing if outside of screen
     if (
-      pos.xMax < 0 ||
-      pos.yMax < 0 ||
-      pos.xMin > SCREEN_WIDTH ||
-      pos.yMin > SCREEN_HEIGHT
+      plPos.xMax < 0 ||
+      plPos.yMax < 0 ||
+      plPos.xMin > SCREEN_WIDTH ||
+      plPos.yMin > SCREEN_HEIGHT
     ) {
-      renderPlanetTriangle(planet, pos, player);
+      renderPlanetTriangle(planet, plPos, player);
       continue;
     }
 
 	  glBoxFilled(
+      plPos.xMin,
+      plPos.yMin,
+      plPos.xMax,
+      plPos.yMax,
+      planet.color
+    );
+  }
+
+  // Draw projectiles
+  for (Projectile &proj : world.projectiles) {
+    EntityScreenPos pos = entityScreenPosition(world, proj, player);
+
+    glBoxFilled(
       pos.xMin,
       pos.yMin,
       pos.xMax,
       pos.yMax,
-      planet.color
+      proj.color
     );
   }
 
@@ -87,6 +101,6 @@ void render(SpaceWorld world, SpacePlayer player) {
     (SCREEN_HEIGHT / 2),
     ((SCREEN_WIDTH / 2) + player.size.x),
     ((SCREEN_HEIGHT / 2) + player.size.y),
-    RGB15(255, 255, 255)
+    player.color
   );
 }
