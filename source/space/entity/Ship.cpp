@@ -7,6 +7,7 @@
 
 #include "Ship.h"
 #include "SpacePlayer.h"
+#include "../SpaceWorld.h"
 #include "../../controls.h"
 #include "../Renderer.h"
 #include "../../consts.h"
@@ -37,18 +38,6 @@ void Ship::update(SpacePlayer &player) {
   //     p.pull(*this);
   //   }
   // }
-
-  // Projectile handling
-  for (Projectile &proj : this->projectiles) {
-    if (this->maxProjectiles < this->projectiles.size()) {
-      this->projectiles.erase(this->projectiles.begin());
-    }
-
-    cout << "update evely" << proj.velocity.y << endl; 
-    cout << "update eposy" << proj.position.y << endl; 
-
-    proj.update();
-  }
 
   // Check position relative to player, if they are too close, they are detected, otherwise if they are too far, no longer detected
   if (this->playerInRange(this->radarRange, player.position)) {
@@ -92,25 +81,30 @@ Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
   };
 }
 
-void Ship::shoot(int angle) {
+void Ship::shoot(SpaceWorld &world, float angle) {
   // Create projectile entity from the base provided projectile
-  Projectile newProj(this->proj);
+  // Projectile newProj(this->proj);
 
-  Vector2 vel = {
-    cosf(angle) * newProj.speed,
-    sinf(angle) * newProj.speed
-  };
+  // Vector2 vel = {
+  //   cosf(angle) * newProj.speed,
+  //   sinf(angle) * newProj.speed
+  // };
 
-  Vector2 pos = {
-    this->position.x,
-    this->position.y
-  };
+  // Vector2 pos = {
+  //   this->position.x,
+  //   this->position.y
+  // };
 
-  newProj.setVelocity(vel);
-  newProj.setPosition(pos);
+  // newProj.setVelocity(vel);
+  // newProj.setPosition(pos);
 
-  //cout << "proj vel y: " << newProj.velocity.y << endl;
-  //cout << "newproj pos x: " << newProj.position.x << endl;
+  // //cout << "proj vel y: " << newProj.velocity.y << endl;
+  // //cout << "newproj pos x: " << newProj.position.x << endl;
 
-  // this->projectiles.push_back(newProj);
+  // world.projectiles.push_back(newProj);
+}
+
+void Ship::shootAt(SpaceWorld &world, Entity entity) {
+  float angle = std::atan2(entity.position.x - this->position.x, entity.position.y - this->position.y);
+  this->shoot(world, angle);
 }

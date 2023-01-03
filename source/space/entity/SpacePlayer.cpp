@@ -90,18 +90,6 @@ void SpacePlayer::update(SpaceWorld &world) {
   float distFrom = closest.distanceFrom(*this);
   float pullforce = closest.pullForce(*this);
 
-  // Projectile handling
-  for (Projectile &proj : this->projectiles) {
-    if (this->maxProjectiles < this->projectiles.size()) {
-      this->projectiles.erase(this->projectiles.begin());
-    }
-
-    cout << "update pvely" << proj.velocity.y << endl; 
-    cout << "update pposy" << proj.position.y << endl; 
-
-    proj.update();
-  }
-
   cout << "Closest planet:" << closest.name << endl;
   cout << "Dist from planet: " << distFrom << endl;
   cout << "Planet X: " << closest.position.x << endl;
@@ -120,13 +108,13 @@ void SpacePlayer::update(SpaceWorld &world) {
   this->setYPosition(this->position.y + this->velocity.y);
 }
 
-void SpacePlayer::shoot(int angle) {
+int SpacePlayer::shoot(SpaceWorld &world, float angle) {
   // Create projectile entity from the base provided projectile
-  Projectile newProj(this->proj);
+  Projectile p = Projectile(PROJECTILE_GATTLING);
 
   Vector2 vel = {
-    cosf(angle) * newProj.speed,
-    sinf(angle) * newProj.speed
+    sinf(angle) * p.speed,
+    cosf(angle) * p.speed
   };
 
   Vector2 pos = {
@@ -134,11 +122,10 @@ void SpacePlayer::shoot(int angle) {
     this->position.y
   };
 
-  newProj.setVelocity(vel);
-  newProj.setPosition(pos);
+  p.setVelocity(vel);
+  p.setPosition(pos);
 
-  //cout << "proj vel y: " << newProj.velocity.y << endl;
-  //cout << "newproj pos x: " << newProj.position.x << endl;
+  world.spawnProjectile(p);
 
-  // this->projectiles.push_back(newProj);
+  return p.cooldownFrames;
 }

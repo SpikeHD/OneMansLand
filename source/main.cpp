@@ -46,20 +46,21 @@ int main(void) {
   // Init RNG
   srand(processedTime);
 
+  int canShootAgainFrame = 0;
   touchPosition touchXY;
 
   WorldState state = WS_SPACE;
-
   Vector2 initialPos = {
     0.0f, 0.0f
   };
-
   Vector2 size = {
     5.0f, 5.0f
   };
-
   // The space player
   SpacePlayer player = SpacePlayer(initialPos, size);
+  // The spaceworld
+  SpaceWorld world = SpaceWorld();
+  world.generate();
 
   // DEBUG
   Vector2 enPos = {
@@ -69,10 +70,6 @@ int main(void) {
 
   enemy.addXVelocity(0.1f);
 
-  // The spaceworld
-  SpaceWorld world = SpaceWorld();
-  world.generate();
-
   // DEBUG
   world.spawnShip(enemy);
 
@@ -81,7 +78,6 @@ int main(void) {
   
   // TODO: this is for debugging only
 	consoleDemoInit();
-  iprintf("This is a test");
 
   // DEBUG
   int lastFrame = 0;
@@ -110,7 +106,7 @@ int main(void) {
     }
 
     if (state == WS_SPACE) {
-      cout << "World projectiles: " << player.projectiles.size() << endl;
+      cout << "World projectiles: " << world.projectiles.size() << endl;
 
       render(world, player);
 
@@ -119,15 +115,22 @@ int main(void) {
       world.update(player);
 
       if (touchXY.px != 0 && touchXY.py != 0) {
-        // Calc angle from the center of the screen
-        Vector2 center {
-          SCREEN_WIDTH / 2,
-          SCREEN_HEIGHT / 2
-        };
+        if (canShootAgainFrame != 0 && canShootAgainFrame < frame) {
+          // Check if the cooldown for the weapon has ended
+          canShootAgainFrame = 0;
+        }
 
-        int angle = std::atan2(touchXY.px - center.x, touchXY.py - center.y);
-        
-        // player.shoot(angle);
+        if (canShootAgainFrame == 0) {
+          // Calc angle from the center of the screen
+          Vector2 center {
+            SCREEN_WIDTH / 2,
+            SCREEN_HEIGHT / 2
+          };
+
+          float angle = std::atan2(touchXY.px - center.x, touchXY.py - center.y);
+          
+          canShootAgainFrame = frame + player.shoot(world, angle);
+        }
       }
     }
 

@@ -7,6 +7,7 @@
 #include "Projectile.h"
 
 class SpacePlayer;
+class SpaceWorld;
 
 class Ship : public Entity {
   public:
@@ -22,8 +23,6 @@ class Ship : public Entity {
     int blindnessDistance = 70;
 
     bool seesPlayer;
-    Projectile proj;
-    std::vector<Projectile> projectiles;
 
     Ship(Vector2, Vector2);
     Ship(Vector2, Vector2, bool);
@@ -31,7 +30,8 @@ class Ship : public Entity {
     bool playerInRange(float, Vector2);
     Vector2 distanceFromPlayer(SpacePlayer&);
     void update(SpacePlayer&);
-    void shoot(int);
+    void shoot(SpaceWorld&, float);
+    void shootAt(SpaceWorld&, Entity);
 };
 
 #endif

@@ -11,9 +11,11 @@ class SpaceWorld {
   public:
     float zoomLevel;
     bool landedOnPlanet;
+    int maxProjectiles = 10;
 
     std::vector<Planet> planets;
     std::vector<Ship> ships;
+    std::vector<Projectile> projectiles;
 
     SpaceWorld();
 
@@ -21,6 +23,7 @@ class SpaceWorld {
     void update(SpacePlayer&);
 
     void spawnShip(Ship);
+    void spawnProjectile(Projectile);
 };
 
 #endif

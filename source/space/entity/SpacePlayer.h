@@ -13,16 +13,12 @@ class SpaceWorld;
 
 class SpacePlayer : public Entity {
   public:
-    float maxProjectiles = 1;
-    Projectile proj;
-    std::vector<Projectile> projectiles;
-
     SpacePlayer(Vector2, Vector2);
 
     bool collidingWithPlanet(SpaceWorld, Planet);
     void control(SpaceWorld &);
     void update(SpaceWorld &);
-    void shoot(int);
+    int shoot(SpaceWorld&, float);
 };
 
 #endif

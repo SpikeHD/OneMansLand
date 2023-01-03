@@ -1,4 +1,5 @@
 #include <string>
+#include <nds.h>
 #include <gl2d.h>
 
 #include "SpaceWorld.h"
@@ -31,8 +32,21 @@ void SpaceWorld::update(SpacePlayer &player) {
   for (Ship &ship : this->ships) {
     ship.update(player);
   }
+
+    // Projectile handling
+  for (Projectile &proj : this->projectiles) {
+    if (this->maxProjectiles < this->projectiles.size()) {
+      this->projectiles.erase(this->projectiles.begin());
+    }
+
+    proj.update();
+  }
 }
 
 void SpaceWorld::spawnShip(Ship ship) {
   this->ships.push_back(ship);
+}
+
+void SpaceWorld::spawnProjectile(Projectile projectile) {
+  this->projectiles.push_back(projectile);
 }

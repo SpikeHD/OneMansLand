@@ -2,35 +2,35 @@
 
 #include <iostream>
 
-Projectile::Projectile() {
-  this->damage = 2;
-  this->speed = 0.01f;
-  this->name = "Gattling Gun";
-  this->cooldownSec = 1;
-
+// Projectiles based on type
+Projectile::Projectile(ProjectileType type) {
   this->lifeStart = time(NULL);
+
+  switch(type) {
+    case PROJECTILE_GATTLING:
+      this->damage = 2;
+      this->speed = 1.0f;
+      this->name = "Gattling";
+      this->cooldownFrames = 10;
+      this->color = RGB15(255,255,0);
+      this->size = Vector2 {
+        2.0f, 2.0f
+      };
+      break;
+  }
 }
 
-Projectile::Projectile(int damage, float speed, int cooldownSec, string name, int color) {
+Projectile::Projectile(int damage, float speed, int cooldownFrames, string name, int color) {
   this->damage = damage;
   this->speed = speed;
   this->name = name;
-  this->cooldownSec = cooldownSec;
-
-  this->lifeStart = time(NULL);
-}
-
-Projectile::Projectile(const Projectile& proj) {
-  this->damage = proj.damage;
-  this->speed = proj.speed;
-  this->name = proj.name;
-  this->cooldownSec = proj.cooldownSec;
-  this->color = proj.color;
+  this->cooldownFrames = cooldownFrames;
+  this->color = color;
 
   this->lifeStart = time(NULL);
 }
 
 void Projectile::update() {
-  // this->setXPosition(this->position.x + this->velocity.x);
-  // this->setYPosition(this->position.y + this->velocity.y);
+  this->setXPosition(this->position.x + this->velocity.x);
+  this->setYPosition(this->position.y + this->velocity.y);
 }
