@@ -32,21 +32,45 @@ void SpacePlayer::control(SpaceWorld &world) {
 
   if (btn_up()) {
     this->addYVelocity(-vel);
+    
+    if (this->velocity.y > 0) {
+      // We are braking, double the velocity applied
+      this->addYVelocity(-vel);
+    }
+
     cout << "^ ";
   }
 
   if (btn_down()) {
     this->addYVelocity(vel);
+
+    if (this->velocity.y < 0) {
+      // We are braking, double the velocity applied
+      this->addYVelocity(vel);
+    }
+
     cout << "v ";
   }
 
   if (btn_right()) {
     this->addXVelocity(vel);
+
+    if (this->velocity.x < 0) {
+      // We are braking, double the velocity applied
+      this->addXVelocity(vel);
+    }
+
     cout << "> ";
   }
 
   if (btn_left()) {
     this->addXVelocity(-vel);
+
+    if (this->velocity.x > 0) {
+      // We are braking, double the velocity applied
+      this->addXVelocity(-vel);
+    }
+
     cout << "< ";
   }
 
