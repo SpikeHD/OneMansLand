@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "Enemy.h"
+#include "SpacePlayer.h"
 #include "../../controls.h"
 #include "../Renderer.h"
 #include "../../consts.h"
@@ -17,10 +18,11 @@ Enemy::Enemy(Vector2 position, Vector2 size) {
   this->size = size;
 
   this->maxVelocity = 3;
-  this->color = RGB15(255,255,255);
+  this->color = RGB15(255,0,0);
 }
 
 void Enemy::update(SpacePlayer &player) {
+  Vector2 distFromPlayer = distanceFromPlayer(player);
   //Planet closest = world.planets.at(0);
 
   // for (Planet p : world.planets) {
@@ -45,8 +47,46 @@ void Enemy::update(SpacePlayer &player) {
     proj.update();
   }
 
+  // Check position relative to player, if they are too close, they are detected, otherwise if they are too far, no longer detected
+  if (this->playerInRange(this->radarRange, player.position)) {
+    // Player is seen
+    this->seesPlayer = true;
+  }
+
+  if (!this->playerInRange(this->blindnessDistance, player.position)) {
+    // Player got away
+    this->seesPlayer = false;
+  }
+
+  cout << "Enemy sees player?: " << this->seesPlayer << endl;
+  cout << "Enemy distfromplayer x: " << distFromPlayer.x << endl;
+  cout << "Enemy distfromplayer y: " << distFromPlayer.y << endl;
+
+  if (this->seesPlayer) {
+    Vector2 vel = {
+      distFromPlayer.x < 0 ? thrust : -thrust,
+      distFromPlayer.y < 0 ? thrust : -thrust 
+    };
+
+    // Set new velocity
+    this->addVelocity(vel);
+  }
+
   this->setXPosition(this->position.x + this->velocity.x);
   this->setYPosition(this->position.y + this->velocity.y);
+}
+
+bool Enemy::playerInRange(float range, Vector2 playerPos) {
+  float dx = playerPos.x - this->position.x;
+  float dy = playerPos.y - this->position.y;
+  return dx * dx + dy * dy < range * range;
+}
+
+Vector2 Enemy::distanceFromPlayer(SpacePlayer &player) {
+  return Vector2 {
+    this->position.x - player.position.x,
+    this->position.y - player.position.y
+  };
 }
 
 void Enemy::shoot(int angle) {

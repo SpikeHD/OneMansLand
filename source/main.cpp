@@ -62,7 +62,10 @@ int main(void) {
   SpacePlayer player = SpacePlayer(initialPos, size);
 
   // DEBUG
-  Enemy enemy = Enemy(initialPos, size);
+  Vector2 enPos = {
+    30.0f, 30.0f
+  };
+  Enemy enemy = Enemy(enPos, size);
 
   enemy.addXVelocity(0.1f);
 
@@ -113,7 +116,7 @@ int main(void) {
 
       player.control(world);
       player.update(world);
-      world.update();
+      world.update(player);
 
       if (touchXY.px != 0 && touchXY.py != 0) {
         // Calc angle from the center of the screen

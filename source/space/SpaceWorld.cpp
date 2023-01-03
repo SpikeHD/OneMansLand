@@ -27,9 +27,9 @@ void SpaceWorld::generate() {
   }
 }
 
-void SpaceWorld::update() {
+void SpaceWorld::update(SpacePlayer &player) {
   for (Enemy &enemy : this->enemies) {
-    enemy.update();
+    enemy.update(player);
   }
 }
 

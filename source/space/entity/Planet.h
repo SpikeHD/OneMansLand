@@ -1,13 +1,12 @@
+#ifndef SPC_PLANET_H
+#define SPC_PLANET_H
+
 #include <string>
 
 #include "../../Vector.h"
 #include "Entity.h"
 
 using namespace std;
-
-#ifndef SPC_PLANET_H
-#define SPC_PLANET_H
-
 class Planet : public Entity {
   public:
     int seed;

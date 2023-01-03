@@ -1,7 +1,7 @@
-#include <nds.h>
-
 #ifndef CONTROLS_H
 #define CONTROLS_H
+
+#include <nds.h>
 
 bool btn_up();
 bool btn_down();

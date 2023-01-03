@@ -6,8 +6,9 @@
 #include <nds.h>
 #include <algorithm>
 
-#include "../../controls.h"
 #include "SpacePlayer.h"
+#include "../SpaceWorld.h"
+#include "../../controls.h"
 #include "../Renderer.h"
 #include "../../consts.h"
 

@@ -1,11 +1,11 @@
+#ifndef SPC_PROJECTILE_H
+#define SPC_PROJECTILE_H
+
 #include <gl2d.h>
 #include <ctime>
 #include <string>
 
 #include "Entity.h"
-
-#ifndef SPC_PROJECTILE_H
-#define SPC_PROJECTILE_H
 
 class Projectile : public Entity {
   public:

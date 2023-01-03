@@ -4,9 +4,8 @@
 #include "entity/Projectile.h"
 #include "entity/Planet.h"
 #include "entity/Enemy.h"
+#include "entity/SpacePlayer.h"
 #include <vector>
-#include <deque>
-
 
 class SpaceWorld {
   public:
@@ -19,7 +18,7 @@ class SpaceWorld {
     SpaceWorld();
 
     void generate();
-    void update();
+    void update(SpacePlayer&);
 
     void spawnEnemy(Enemy);
 };

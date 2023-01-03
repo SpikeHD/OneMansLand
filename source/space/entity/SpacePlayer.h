@@ -1,11 +1,15 @@
-#include "Entity.h"
-#include "Projectile.h"
-#include "../SpaceWorld.h"
-
 #ifndef SPC_PLAYER_H
 #define SPC_PLAYER_H
 
+#include <vector>
+
+#include "Entity.h"
+#include "Projectile.h"
+#include "Planet.h"
+
 using namespace std;
+
+class SpaceWorld;
 
 class SpacePlayer : public Entity {
   public:
