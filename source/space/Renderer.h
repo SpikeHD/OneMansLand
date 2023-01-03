@@ -3,7 +3,7 @@
 
 #include "SpaceWorld.h"
 #include "entity/SpacePlayer.h"
-#include "entity/Enemy.h"
+#include "entity/Ship.h"
 
 struct EntityScreenPos {
   float xMin;

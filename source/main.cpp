@@ -10,7 +10,7 @@
 #include "consts.h"
 #include "controls.h"
 #include "space/entity/SpacePlayer.h"
-#include "space/entity/Enemy.h"
+#include "space/entity/Ship.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
 
@@ -65,7 +65,7 @@ int main(void) {
   Vector2 enPos = {
     30.0f, 30.0f
   };
-  Enemy enemy = Enemy(enPos, size);
+  Ship enemy = Ship(enPos, size, true);
 
   enemy.addXVelocity(0.1f);
 
@@ -74,7 +74,7 @@ int main(void) {
   world.generate();
 
   // DEBUG
-  world.spawnEnemy(enemy);
+  world.spawnShip(enemy);
 
   // Initializes GL2D and stuff
   gl2dInit();

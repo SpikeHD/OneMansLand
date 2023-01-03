@@ -8,10 +8,12 @@
 
 class SpacePlayer;
 
-class Enemy : public Entity {
+class Ship : public Entity {
   public:
     float maxProjectiles = 1;
     float thrust = 0.01f;
+
+    bool agressive = false;
 
     // How far away the player can be seen
     int radarRange = 50;
@@ -23,7 +25,8 @@ class Enemy : public Entity {
     Projectile proj;
     std::vector<Projectile> projectiles;
 
-    Enemy(Vector2, Vector2);
+    Ship(Vector2, Vector2);
+    Ship(Vector2, Vector2, bool);
 
     bool playerInRange(float, Vector2);
     Vector2 distanceFromPlayer(SpacePlayer&);

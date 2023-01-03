@@ -5,7 +5,7 @@
 #include <gl2d.h>
 #include <algorithm>
 
-#include "Enemy.h"
+#include "Ship.h"
 #include "SpacePlayer.h"
 #include "../../controls.h"
 #include "../Renderer.h"
@@ -13,15 +13,18 @@
 
 // TODO < 0.2 velocity should be a crash, less is a landing
 
-Enemy::Enemy(Vector2 position, Vector2 size) {
+Ship::Ship(Vector2 position, Vector2 size, bool agressive) {
   this->position = position;
   this->size = size;
+  this->agressive = agressive;
 
   this->maxVelocity = 3;
   this->color = RGB15(255,0,0);
 }
 
-void Enemy::update(SpacePlayer &player) {
+Ship::Ship(Vector2 position, Vector2 size) : Ship(position, size, false) {};
+
+void Ship::update(SpacePlayer &player) {
   Vector2 distFromPlayer = distanceFromPlayer(player);
   //Planet closest = world.planets.at(0);
 
@@ -58,9 +61,9 @@ void Enemy::update(SpacePlayer &player) {
     this->seesPlayer = false;
   }
 
-  cout << "Enemy sees player?: " << this->seesPlayer << endl;
-  cout << "Enemy distfromplayer x: " << distFromPlayer.x << endl;
-  cout << "Enemy distfromplayer y: " << distFromPlayer.y << endl;
+  cout << "Ship sees player?: " << this->seesPlayer << endl;
+  cout << "Ship distfromplayer x: " << distFromPlayer.x << endl;
+  cout << "Ship distfromplayer y: " << distFromPlayer.y << endl;
 
   if (this->seesPlayer) {
     Vector2 vel = {
@@ -76,20 +79,20 @@ void Enemy::update(SpacePlayer &player) {
   this->setYPosition(this->position.y + this->velocity.y);
 }
 
-bool Enemy::playerInRange(float range, Vector2 playerPos) {
+bool Ship::playerInRange(float range, Vector2 playerPos) {
   float dx = playerPos.x - this->position.x;
   float dy = playerPos.y - this->position.y;
   return dx * dx + dy * dy < range * range;
 }
 
-Vector2 Enemy::distanceFromPlayer(SpacePlayer &player) {
+Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
   return Vector2 {
     this->position.x - player.position.x,
     this->position.y - player.position.y
   };
 }
 
-void Enemy::shoot(int angle) {
+void Ship::shoot(int angle) {
   // Create projectile entity from the base provided projectile
   Projectile newProj(this->proj);
 

@@ -3,7 +3,7 @@
 
 #include "entity/Projectile.h"
 #include "entity/Planet.h"
-#include "entity/Enemy.h"
+#include "entity/Ship.h"
 #include "entity/SpacePlayer.h"
 #include <vector>
 
@@ -13,14 +13,14 @@ class SpaceWorld {
     bool landedOnPlanet;
 
     std::vector<Planet> planets;
-    std::vector<Enemy> enemies;
+    std::vector<Ship> ships;
 
     SpaceWorld();
 
     void generate();
     void update(SpacePlayer&);
 
-    void spawnEnemy(Enemy);
+    void spawnShip(Ship);
 };
 
 #endif

@@ -59,8 +59,8 @@ void render(SpaceWorld &world, SpacePlayer &player) {
   // TODO: Do stuff with the world
   
   // DEBUG ENEMY
-  for (Enemy &enemy : world.enemies) {
-    EntityScreenPos epos = entityScreenPosition(world, enemy, player);
+  for (Ship &ship : world.ships) {
+    EntityScreenPos epos = entityScreenPosition(world, ship, player);
     glBoxFilled(
       epos.xMin,
       epos.yMin,
