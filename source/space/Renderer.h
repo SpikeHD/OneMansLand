@@ -1,5 +1,6 @@
 #include "SpaceWorld.h"
 #include "entity/SpacePlayer.h"
+#include "entity/Enemy.h"
 
 #ifndef SPC_RENDER_H
 #define SPC_RENDER_H

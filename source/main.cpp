@@ -10,6 +10,7 @@
 #include "consts.h"
 #include "controls.h"
 #include "space/entity/SpacePlayer.h"
+#include "space/entity/Enemy.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
 
@@ -60,9 +61,17 @@ int main(void) {
   // The space player
   SpacePlayer player = SpacePlayer(initialPos, size);
 
+  // DEBUG
+  Enemy enemy = Enemy(initialPos, size);
+
+  enemy.addXVelocity(0.1f);
+
   // The spaceworld
   SpaceWorld world = SpaceWorld();
   world.generate();
+
+  // DEBUG
+  world.spawnEnemy(enemy);
 
   // Initializes GL2D and stuff
   gl2dInit();

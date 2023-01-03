@@ -28,5 +28,11 @@ void SpaceWorld::generate() {
 }
 
 void SpaceWorld::update() {
+  for (Enemy &enemy : this->enemies) {
+    enemy.update();
+  }
+}
 
+void SpaceWorld::spawnEnemy(Enemy enemy) {
+  this->enemies.push_back(enemy);
 }

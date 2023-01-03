@@ -58,6 +58,18 @@ EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePla
 void render(SpaceWorld &world, SpacePlayer &player) {
   // TODO: Do stuff with the world
   
+  // DEBUG ENEMY
+  for (Enemy &enemy : world.enemies) {
+    EntityScreenPos epos = entityScreenPosition(world, enemy, player);
+    glBoxFilled(
+      epos.xMin,
+      epos.yMin,
+      epos.xMax,
+      epos.yMax,
+      player.color
+    );
+  }
+
   // Draw projectiles
   for (Projectile &proj : player.projectiles) {
     EntityScreenPos pos = entityScreenPosition(world, proj, player);

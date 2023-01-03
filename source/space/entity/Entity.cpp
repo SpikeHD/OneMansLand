@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "../Renderer.h"
 #include <algorithm>
 
 void Entity::setXVelocity(float vel) {

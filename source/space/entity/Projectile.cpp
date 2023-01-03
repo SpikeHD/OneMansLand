@@ -31,6 +31,6 @@ Projectile::Projectile(const Projectile& proj) {
 }
 
 void Projectile::update() {
-  this->setXPosition(this->position.x + this->velocity.x);
-  this->setYPosition(this->position.y + this->velocity.y);
+  // this->setXPosition(this->position.x + this->velocity.x);
+  // this->setYPosition(this->position.y + this->velocity.y);
 }
