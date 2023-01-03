@@ -14,16 +14,22 @@
 
 // TODO < 0.2 velocity should be a crash, less is a landing
 
-Ship::Ship(Vector2 position, Vector2 size, bool agressive) {
+Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
   this->position = position;
   this->size = size;
   this->agressive = agressive;
 
   this->maxVelocity = 3;
   this->color = RGB15(255,0,0);
+  this->health = health;
+
+  this->hitSize = {
+    this->size.x,
+    this->size.y,
+  };
 }
 
-Ship::Ship(Vector2 position, Vector2 size) : Ship(position, size, false) {};
+Ship::Ship(Vector2 position, Vector2 size) : Ship(position, size, false, 50) {};
 
 void Ship::update(SpacePlayer &player) {
   Vector2 distFromPlayer = distanceFromPlayer(player);
@@ -53,6 +59,7 @@ void Ship::update(SpacePlayer &player) {
   cout << "Ship sees player?: " << this->seesPlayer << endl;
   cout << "Ship distfromplayer x: " << distFromPlayer.x << endl;
   cout << "Ship distfromplayer y: " << distFromPlayer.y << endl;
+  cout << "Ship health: " << this->health << endl;
 
   if (this->seesPlayer) {
     Vector2 vel = {

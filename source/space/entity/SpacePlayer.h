@@ -13,6 +13,8 @@ class SpaceWorld;
 
 class SpacePlayer : public Entity {
   public:
+    int health = 50;
+
     SpacePlayer(Vector2, Vector2);
 
     bool collidingWithPlanet(SpaceWorld, Planet);

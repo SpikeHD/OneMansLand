@@ -8,9 +8,12 @@ using namespace std;
 
 class Entity {
   public:
+    int health;
     Vector2 position;
     Vector2 velocity;
     Vector2 size;
+    // Hitbox type thingy
+    Vector2 hitSize;
     int color;
     float maxVelocity = 2;
 

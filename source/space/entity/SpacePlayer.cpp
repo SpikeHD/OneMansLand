@@ -17,6 +17,7 @@
 SpacePlayer::SpacePlayer(Vector2 position, Vector2 size) {
   this->position = position;
   this->size = size;
+  this->hitSize = size;
 
   this->maxVelocity = 3;
   this->color = RGB15(255,255,255);
@@ -113,8 +114,8 @@ int SpacePlayer::shoot(SpaceWorld &world, float angle) {
   Projectile p = Projectile(PROJECTILE_GATTLING);
 
   Vector2 vel = {
-    sinf(angle) * p.speed,
-    cosf(angle) * p.speed
+    (sinf(angle) * p.speed) + this->velocity.x,
+    (cosf(angle) * p.speed) + this->velocity.y
   };
 
   Vector2 pos = {
@@ -124,6 +125,8 @@ int SpacePlayer::shoot(SpaceWorld &world, float angle) {
 
   p.setVelocity(vel);
   p.setPosition(pos);
+
+  p.belongsToPlayer = true;
 
   world.spawnProjectile(p);
 

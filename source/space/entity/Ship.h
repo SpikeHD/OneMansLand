@@ -11,6 +11,7 @@ class SpaceWorld;
 
 class Ship : public Entity {
   public:
+    int health;
     float maxProjectiles = 1;
     float thrust = 0.01f;
 
@@ -25,7 +26,7 @@ class Ship : public Entity {
     bool seesPlayer;
 
     Ship(Vector2, Vector2);
-    Ship(Vector2, Vector2, bool);
+    Ship(Vector2, Vector2, bool, int);
 
     bool playerInRange(float, Vector2);
     Vector2 distanceFromPlayer(SpacePlayer&);

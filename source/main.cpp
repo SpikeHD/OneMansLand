@@ -66,7 +66,7 @@ int main(void) {
   Vector2 enPos = {
     30.0f, 30.0f
   };
-  Ship enemy = Ship(enPos, size, true);
+  Ship enemy = Ship(enPos, size, true, 50);
 
   enemy.addXVelocity(0.1f);
 

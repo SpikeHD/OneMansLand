@@ -61,6 +61,16 @@ void render(SpaceWorld &world, SpacePlayer &player) {
   // Draw other ships
   for (Ship &ship : world.ships) {
     EntityScreenPos epos = entityScreenPosition(world, ship, player);
+    
+    // DEBUG draw hitboxes
+    glBoxFilled(
+      epos.xMin - ship.hitSize.x,
+      epos.yMin - ship.hitSize.y,
+      epos.xMax + ship.hitSize.x,
+      epos.yMax + ship.hitSize.y,
+      RGB15(255,255,255)
+    );
+
     glBoxFilled(
       epos.xMin,
       epos.yMin,

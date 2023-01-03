@@ -12,12 +12,16 @@ enum ProjectileType {
   PROJECTILE_MISSLE
 };
 
+class SpaceWorld;
+class SpacePlayer;
+
 class Projectile : public Entity {
   public:
     int damage;
     float speed;
     int cooldownFrames;
     int color;
+    bool belongsToPlayer = false;
 
     time_t lifeStart;
 
@@ -25,6 +29,8 @@ class Projectile : public Entity {
     Projectile(ProjectileType);
 
     void update();
+    bool hittingEntity(SpaceWorld&, SpacePlayer&);
+    bool hitDetect(Entity&);
 };
 
 #endif

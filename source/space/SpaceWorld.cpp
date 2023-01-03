@@ -29,6 +29,8 @@ void SpaceWorld::generate() {
 }
 
 void SpaceWorld::update(SpacePlayer &player) {
+  int pIdx = 0;
+
   for (Ship &ship : this->ships) {
     ship.update(player);
   }
@@ -40,6 +42,13 @@ void SpaceWorld::update(SpacePlayer &player) {
     }
 
     proj.update();
+
+    // If the projectile is hitting something, handle it and remove the projectile from the list
+    if (proj.hittingEntity(*this, player)) {
+      this->projectiles.erase(this->projectiles.begin() + pIdx);
+    }
+
+    pIdx++;
   }
 }
 
