@@ -32,7 +32,7 @@ void SpaceWorld::update(SpacePlayer &player) {
   int pIdx = 0;
 
   for (Ship &ship : this->ships) {
-    ship.update(player);
+    ship.update(*this, player);
   }
 
     // Projectile handling

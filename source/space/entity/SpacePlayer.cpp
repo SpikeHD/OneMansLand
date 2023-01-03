@@ -21,6 +21,7 @@ SpacePlayer::SpacePlayer(Vector2 position, Vector2 size) {
 
   this->maxVelocity = 3;
   this->color = RGB15(255,255,255);
+  this->projectileType = PROJECTILE_GATTLING;
 }
 
 void SpacePlayer::control(SpaceWorld &world) {

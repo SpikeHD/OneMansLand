@@ -27,11 +27,13 @@ Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
     this->size.x,
     this->size.y,
   };
+
+  this->projectileType = PROJECTILE_GATTLING;
 }
 
 Ship::Ship(Vector2 position, Vector2 size) : Ship(position, size, false, 50) {};
 
-void Ship::update(SpacePlayer &player) {
+void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   Vector2 distFromPlayer = distanceFromPlayer(player);
   //Planet closest = world.planets.at(0);
 
@@ -69,6 +71,10 @@ void Ship::update(SpacePlayer &player) {
 
     // Set new velocity
     this->addVelocity(vel);
+
+    // Shoot at players angle
+    cout << "Shooting at: ";
+    this->shootAt(world, player);
   }
 
   this->setXPosition(this->position.x + this->velocity.x);
@@ -89,29 +95,35 @@ Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
 }
 
 void Ship::shoot(SpaceWorld &world, float angle) {
+  if (frame < this->canShootAgainFrame) return;
+
   // Create projectile entity from the base provided projectile
-  // Projectile newProj(this->proj);
+  Projectile p = Projectile(this->projectileType);
 
-  // Vector2 vel = {
-  //   cosf(angle) * newProj.speed,
-  //   sinf(angle) * newProj.speed
-  // };
+  Vector2 vel = {
+    (sinf(angle) * p.speed) + this->velocity.x,
+    (cosf(angle) * p.speed) + this->velocity.y
+  };
 
-  // Vector2 pos = {
-  //   this->position.x,
-  //   this->position.y
-  // };
+  Vector2 pos = {
+    this->position.x,
+    this->position.y
+  };
 
-  // newProj.setVelocity(vel);
-  // newProj.setPosition(pos);
+  p.setVelocity(vel);
+  p.setPosition(pos);
 
-  // //cout << "proj vel y: " << newProj.velocity.y << endl;
-  // //cout << "newproj pos x: " << newProj.position.x << endl;
+  p.belongsToPlayer = false;
 
-  // world.projectiles.push_back(newProj);
+  world.spawnProjectile(p);
+
+  this->canShootAgainFrame = frame + p.cooldownFrames;
 }
 
 void Ship::shootAt(SpaceWorld &world, Entity entity) {
   float angle = std::atan2(entity.position.x - this->position.x, entity.position.y - this->position.y);
+
+  cout << angle << endl;
+
   this->shoot(world, angle);
 }

@@ -11,9 +11,9 @@ Projectile::Projectile(ProjectileType type) {
   switch(type) {
     case PROJECTILE_GATTLING:
       this->damage = 2;
-      this->speed = 1.0f;
+      this->speed = 2.0f;
       this->name = "Gattling";
-      this->cooldownFrames = 10;
+      this->cooldownFrames = 15;
       this->color = RGB15(255,255,0);
       this->size = Vector2 {
         2.0f, 2.0f
@@ -42,7 +42,7 @@ bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
 
   // Loop through entities to see if any are being hit
   for (Entity &entity : world.ships) {
-    if (hitDetect(entity)) {
+    if (this->belongsToPlayer && hitDetect(entity)) {
       entity.health -= damage;
       hitting = true;
 

@@ -6,12 +6,16 @@
 #include "Entity.h"
 #include "Projectile.h"
 
+extern int frame;
+
 class SpacePlayer;
 class SpaceWorld;
 
 class Ship : public Entity {
   public:
     int health;
+    int canShootAgainFrame = 0;
+    ProjectileType projectileType;
     float maxProjectiles = 1;
     float thrust = 0.01f;
 
@@ -21,7 +25,7 @@ class Ship : public Entity {
     int radarRange = 50;
 
     // How far the player has to go before they are lost by the enemy
-    int blindnessDistance = 70;
+    int blindnessDistance = 140;
 
     bool seesPlayer;
 
@@ -30,7 +34,7 @@ class Ship : public Entity {
 
     bool playerInRange(float, Vector2);
     Vector2 distanceFromPlayer(SpacePlayer&);
-    void update(SpacePlayer&);
+    void update(SpaceWorld&, SpacePlayer&);
     void shoot(SpaceWorld&, float);
     void shootAt(SpaceWorld&, Entity);
 };

@@ -14,6 +14,7 @@ class SpaceWorld;
 class SpacePlayer : public Entity {
   public:
     int health = 50;
+    ProjectileType projectileType;
 
     SpacePlayer(Vector2, Vector2);
 

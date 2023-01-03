@@ -16,7 +16,7 @@
 
 // For tickrate
 volatile time_t processedTime;
-volatile int frame = 0;
+int frame = 0;
 
 enum WorldState {
   WS_SPACE,
