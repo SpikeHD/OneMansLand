@@ -63,6 +63,31 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   cout << "Ship distfromplayer y: " << distFromPlayer.y << endl;
   cout << "Ship health: " << this->health << endl;
 
+  if (this->disabled) {
+    // Brake until at zero
+    if (velocity.x == 0 && velocity.y == 0) {
+      // No need to keep reassigning zeros
+      return;
+    }
+
+    if (velocity.x > 0) {
+      this->addXVelocity(-thrust);
+    } else {
+      this->addXVelocity(thrust);
+    }
+
+    if (velocity.y > 0) {
+      this->addYVelocity(-thrust);
+    } else {
+      this->addYVelocity(thrust);
+    }
+
+    this->setXPosition(this->getPosition().x + this->getVelocity().x);
+    this->setYPosition(this->getPosition().y + this->getVelocity().y);
+
+    return;
+  }
+
   if (this->seesPlayer) {
     Vector2 vel = {
       distFromPlayer.x < 0 ? thrust : -thrust,
@@ -94,7 +119,7 @@ Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
 }
 
 void Ship::shoot(SpaceWorld &world, float angle) {
-  if (frame < this->canShootAgainFrame) return;
+  if (frame < this->canShootAgainFrame || this->disabled) return;
 
   // Create projectile entity from the base provided projectile
   Projectile p = Projectile(this->projectileType);
