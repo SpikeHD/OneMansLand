@@ -15,18 +15,18 @@
 // TODO < 0.2 velocity should be a crash, less is a landing
 
 Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
-  this->position = position;
-  this->size = size;
+  this->setPosition(position);
+  this->setSize(size);
   this->agressive = agressive;
 
   this->maxVelocity = 3;
   this->color = RGB15(255,0,0);
   this->health = health;
 
-  this->hitSize = {
-    this->size.x,
-    this->size.y,
-  };
+  this->setHitSize(Vector2 {
+    this->getSize().x,
+    this->getSize().y,
+  });
 
   this->projectileType = PROJECTILE_GATTLING;
 }
@@ -48,12 +48,12 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   // }
 
   // Check position relative to player, if they are too close, they are detected, otherwise if they are too far, no longer detected
-  if (this->playerInRange(this->radarRange, player.position)) {
+  if (this->playerInRange(this->radarRange, player.getPosition())) {
     // Player is seen
     this->seesPlayer = true;
   }
 
-  if (!this->playerInRange(this->blindnessDistance, player.position)) {
+  if (!this->playerInRange(this->blindnessDistance, player.getPosition())) {
     // Player got away
     this->seesPlayer = false;
   }
@@ -73,24 +73,23 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     this->addVelocity(vel);
 
     // Shoot at players angle
-    cout << "Shooting at: ";
     this->shootAt(world, player);
   }
 
-  this->setXPosition(this->position.x + this->velocity.x);
-  this->setYPosition(this->position.y + this->velocity.y);
+  this->setXPosition(this->getPosition().x + this->getVelocity().x);
+  this->setYPosition(this->getPosition().y + this->getVelocity().y);
 }
 
 bool Ship::playerInRange(float range, Vector2 playerPos) {
-  float dx = playerPos.x - this->position.x;
-  float dy = playerPos.y - this->position.y;
+  float dx = playerPos.x - this->getPosition().x;
+  float dy = playerPos.y - this->getPosition().y;
   return dx * dx + dy * dy < range * range;
 }
 
 Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
   return Vector2 {
-    this->position.x - player.position.x,
-    this->position.y - player.position.y
+    this->getPosition().x - player.getPosition().x,
+    this->getPosition().y - player.getPosition().y
   };
 }
 
@@ -101,13 +100,13 @@ void Ship::shoot(SpaceWorld &world, float angle) {
   Projectile p = Projectile(this->projectileType);
 
   Vector2 vel = {
-    (sinf(angle) * p.speed) + this->velocity.x,
-    (cosf(angle) * p.speed) + this->velocity.y
+    (sinf(angle) * p.speed) + this->getVelocity().x,
+    (cosf(angle) * p.speed) + this->getVelocity().y
   };
 
   Vector2 pos = {
-    this->position.x,
-    this->position.y
+    this->getPosition().x,
+    this->getPosition().y
   };
 
   p.setVelocity(vel);
@@ -121,9 +120,23 @@ void Ship::shoot(SpaceWorld &world, float angle) {
 }
 
 void Ship::shootAt(SpaceWorld &world, Entity entity) {
-  float angle = std::atan2(entity.position.x - this->position.x, entity.position.y - this->position.y);
+  float angle = std::atan2(entity.getPosition().x - this->getPosition().x, entity.getPosition().y - this->getPosition().y);
 
-  cout << angle << endl;
+  // Add some random noise to the angle to make it more fair (0.0 to 1.0)
+  float noise = -0.3 + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(0.6));
 
-  this->shoot(world, angle);
+  this->shoot(world, angle + noise);
+}
+
+void Ship::removeHealth(int h) {
+  this->health = this->health - h;
+
+  if (health <= 0) {
+    this->health = 0;
+    this->disabled = true;
+  }
+}
+
+void Ship::addHealth(int h) {
+  this->health = this->health + h;
 }

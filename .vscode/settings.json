@@ -68,6 +68,9 @@
     "string_view": "cpp",
     "numbers": "cpp",
     "cinttypes": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ctime": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp"
   }
 }

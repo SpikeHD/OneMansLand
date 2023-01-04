@@ -29,19 +29,19 @@ EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePla
   float zoom = world.zoomLevel;
 
   // To make a psuedo-camera, we render the player in the middle and the world in relativity to that
-  float pPosX = player.position.x;
-  float pPosY = player.position.y;
+  float pPosX = player.getPosition().x;
+  float pPosY = player.getPosition().y;
   float pScrPosX = (SCREEN_WIDTH / 2);
   float pScrPosY = (SCREEN_HEIGHT / 2);
 
-  Vector2 center = entity.position;
+  Vector2 center = entity.getPosition();
   Vector2 centerOffset {
     (zoom * center.x) - pPosX * zoom,
     (zoom * center.y) - pPosY * zoom
   };
 
-  float sizeX = entity.size.x * zoom;
-  float sizeY = entity.size.y * zoom;
+  float sizeX = entity.getSize().x * zoom;
+  float sizeY = entity.getSize().y * zoom;
   float calcXMin = center.x + centerOffset.x + pScrPosX - pPosX - (sizeX / 2);
   float calcYMin = center.y + centerOffset.y + pScrPosY - pPosY - (sizeY / 2);
   float calcXMax = center.x + centerOffset.x + pScrPosX - pPosX + (sizeX / 2);
@@ -62,15 +62,6 @@ void render(SpaceWorld &world, SpacePlayer &player) {
   for (Ship &ship : world.ships) {
     EntityScreenPos epos = entityScreenPosition(world, ship, player);
     
-    // DEBUG draw hitboxes
-    glBoxFilled(
-      epos.xMin - ship.hitSize.x,
-      epos.yMin - ship.hitSize.y,
-      epos.xMax + ship.hitSize.x,
-      epos.yMax + ship.hitSize.y,
-      RGB15(255,255,255)
-    );
-
     glBoxFilled(
       epos.xMin,
       epos.yMin,
@@ -120,8 +111,8 @@ void render(SpaceWorld &world, SpacePlayer &player) {
 	glBoxFilled(
     (SCREEN_WIDTH / 2),
     (SCREEN_HEIGHT / 2),
-    ((SCREEN_WIDTH / 2) + player.size.x),
-    ((SCREEN_HEIGHT / 2) + player.size.y),
+    ((SCREEN_WIDTH / 2) + player.getSize().x),
+    ((SCREEN_HEIGHT / 2) + player.getSize().y),
     player.color
   );
 }

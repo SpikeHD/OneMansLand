@@ -32,8 +32,8 @@ void Planet::pull(Entity &entity) {
   float xPullforce = pullforce;
   float yPullforce = pullforce;
 
-  if (entity.position.x > this->position.x) xPullforce = -pullforce;
-  if (entity.position.y > this->position.y) yPullforce = -pullforce;
+  if (entity.getPosition().x > this->position.x) xPullforce = -pullforce;
+  if (entity.getPosition().y > this->position.y) yPullforce = -pullforce;
 
   entity.addXVelocity(xPullforce);
   entity.addYVelocity(yPullforce);
@@ -41,8 +41,8 @@ void Planet::pull(Entity &entity) {
 
 float Planet::distanceFrom(Entity entity) {
   return sqrtf(
-    powf(entity.position.x - this->position.x, 2) +
-    powf(entity.position.y - this->position.y, 2)
+    powf(entity.getPosition().x - this->position.x, 2) +
+    powf(entity.getPosition().y - this->position.y, 2)
   );
 }
 
@@ -56,7 +56,7 @@ bool Planet::isInField(Entity entity) {
  */
 float Planet::pullForce(Entity entity) {
   // formula: F = G * (m1 * m2) / r2
-  float approxSize = sqrtf(entity.size.x + entity.size.y);
+  float approxSize = sqrtf(entity.getSize().x + entity.getSize().y);
   float distBetween = this->distanceFrom(entity);
 
   return 0.001 * ((approxSize * this->size.x) / distBetween);

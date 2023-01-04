@@ -37,3 +37,27 @@ void Entity::setYPosition(float pos) {
 void Entity::setPosition(Vector2 pos) {
   this->position = pos;
 }
+
+void Entity::setSize(Vector2 size) {
+  this->size = size;
+}
+
+void Entity::setHitSize(Vector2 hitSize) {
+  this->hitSize = hitSize;
+}
+
+Vector2 Entity::getVelocity() {
+  return this->velocity;
+}
+
+Vector2 Entity::getPosition() {
+  return this->position;
+}
+
+Vector2 Entity::getSize() {
+  return this->size;
+}
+
+Vector2 Entity::getHitSize() {
+  return this->hitSize;
+}

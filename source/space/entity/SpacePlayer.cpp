@@ -118,9 +118,9 @@ void SpacePlayer::update(SpaceWorld &world) {
 
   cout << "Closest planet:" << closest.name << endl;
   cout << "Dist from planet: " << distFrom << endl;
-  cout << "Planet X: " << closest.position.x << endl;
-  cout << "Planet Y: " << closest.position.y << endl;
-  cout << "Planet size: " << closest.size.x << endl;
+  cout << "Planet X: " << closest.getPosition().x << endl;
+  cout << "Planet Y: " << closest.getPosition().y << endl;
+  cout << "Planet size: " << closest.getSize().x << endl;
 
   cout << "Colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
   cout << "Player X pos: " << this->position.x << endl;
@@ -156,4 +156,12 @@ int SpacePlayer::shoot(SpaceWorld &world, float angle) {
   world.spawnProjectile(p);
 
   return p.cooldownFrames;
+}
+
+void SpacePlayer::removeHealth(int h) {
+  this->health = this->health - h;
+}
+
+void SpacePlayer::addHealth(int h) {
+  this->health = this->health + h;
 }

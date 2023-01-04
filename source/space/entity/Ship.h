@@ -13,7 +13,7 @@ class SpaceWorld;
 
 class Ship : public Entity {
   public:
-    int health;
+    bool disabled = false;
     int canShootAgainFrame = 0;
     ProjectileType projectileType;
     float maxProjectiles = 1;
@@ -37,6 +37,12 @@ class Ship : public Entity {
     void update(SpaceWorld&, SpacePlayer&);
     void shoot(SpaceWorld&, float);
     void shootAt(SpaceWorld&, Entity);
+
+    void removeHealth(int);
+    void addHealth(int);
+
+  private:
+    int health = 50;
 };
 
 #endif

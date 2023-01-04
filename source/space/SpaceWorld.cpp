@@ -18,8 +18,8 @@ void SpaceWorld::generate() {
 
   for (int i = 0; i < planets; i++) {
     Vector2 pos = {
-      rand() % 20000 - 10000,
-      rand() % 20000 - 10000
+      (rand() % 20000) - 10000,
+      (rand() % 20000) - 10000
     };
     int color = RGB15(rand() % 255, rand() % 255, rand() % 255);
 
