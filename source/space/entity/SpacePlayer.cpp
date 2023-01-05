@@ -120,13 +120,10 @@ void SpacePlayer::update(SpaceWorld &world) {
   cout << "Dist from planet: " << distFrom << endl;
   cout << "Planet X: " << closest.getPosition().x << endl;
   cout << "Planet Y: " << closest.getPosition().y << endl;
-  cout << "Planet size: " << closest.getSize().x << endl;
 
   cout << "Colliding with planet?: " << this->collidingWithPlanet(world, closest) << endl;
   cout << "Player X pos: " << this->position.x << endl;
-  cout << "Player y pos: " << this->position.y << endl;
-  cout << "Player X velocity: " << this->velocity.x << endl;
-  cout << "Player y velocity: " << this->velocity.y << endl << endl;
+  cout << "Player y pos: " << this->position.y << endl << endl;
 
   cout << "Zoom level: " << world.zoomLevel << endl;
 
@@ -151,7 +148,8 @@ int SpacePlayer::shoot(SpaceWorld &world, float angle) {
   p.setVelocity(vel);
   p.setPosition(pos);
 
-  p.belongsToPlayer = true;
+  p.fromSquad = 0;
+  p.fromShip = 0;
 
   world.spawnProjectile(p);
 

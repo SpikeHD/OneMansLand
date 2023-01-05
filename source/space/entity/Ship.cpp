@@ -28,13 +28,16 @@ Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
     this->getSize().y,
   });
 
+  // Random ID
+  this->id = rand() % 9999;
+
   this->projectileType = PROJECTILE_GATTLING;
 }
 
 Ship::Ship(Vector2 position, Vector2 size) : Ship(position, size, false, 50) {};
 
 void Ship::update(SpaceWorld &world, SpacePlayer &player) {
-  Vector2 distFromPlayer = distanceFromPlayer(player);
+  Vector2 distFromPlayer = signedDistance(player);
   //Planet closest = world.planets.at(0);
 
   // for (Planet p : world.planets) {
@@ -58,9 +61,6 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     this->seesPlayer = false;
   }
 
-  cout << "Ship sees player?: " << this->seesPlayer << endl;
-  cout << "Ship distfromplayer x: " << distFromPlayer.x << endl;
-  cout << "Ship distfromplayer y: " << distFromPlayer.y << endl;
   cout << "Ship health: " << this->health << endl;
   cout << "Ship is aggresive?: " << this->agressive << endl;
 
@@ -90,20 +90,66 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   }
 
   if (this->seesPlayer && this->agressive) {
-    Vector2 vel = {
-      distFromPlayer.x < 0 ? thrust : -thrust,
-      distFromPlayer.y < 0 ? thrust : -thrust 
-    };
-
-    // Set new velocity
-    this->addVelocity(vel);
+    this->moveTo(player);
 
     // Shoot at players angle
     this->shootAt(world, player);
   }
 
+  Ship &closestEnemy = world.ships.at(0);
+
+  // Check if we are close to any ships. If so, steer away 
+  for (Ship &ship : world.ships) {
+    if (this->id == ship.id) continue;
+
+    // Shooting at enemies
+    if (ship.agressive && ship.squadId != this->squadId) {
+      closestEnemy = ship;
+    }
+
+    // Ensure the closestEneemy is actually an enemy, if so, and they are within range, shoot them
+    if (closestEnemy.agressive && ship.squadId != this->squadId && vecDistance(ship.getPosition(), this->getPosition()) < this->radarRange) {
+      this->moveTo(ship);
+      this->shootAt(world, ship);
+    }
+
+    // Distance flying calculation
+    float distFrom = vecDistance(ship.getPosition(), this->getPosition());
+    float angle = angleFrom(ship.getPosition(), this->getPosition());
+
+    // If it is in their squad, try to stay close
+    if (ship.squadId == this->squadId && distFrom >= 80.0f) {
+      Vector2 attract = {
+        (sinf(angle) * this->thrust * 0.5f) + this->velocity.x,
+        (cosf(angle) * this->thrust * 0.5f) + this->velocity.y
+      };
+
+      ship.setVelocity(attract);
+    }
+
+    if (distFrom >= 20.0f) continue;
+
+    Vector2 dodgeVel = {
+      (sinf(angle) * -this->thrust * 1.5f) + this->velocity.x,
+      (cosf(angle) * -this->thrust * 1.5f) + this->velocity.y
+    };
+
+    this->setVelocity(dodgeVel);
+  }
+
   this->setXPosition(this->getPosition().x + this->getVelocity().x);
   this->setYPosition(this->getPosition().y + this->getVelocity().y);
+}
+
+void Ship::moveTo(Entity &entity) {
+  Vector2 distFrom = this->signedDistance(entity);
+  Vector2 vel = {
+    distFrom.x < 0 ? thrust : -thrust,
+    distFrom.y < 0 ? thrust : -thrust 
+  };
+
+  // Set new velocity
+  this->addVelocity(vel);
 }
 
 bool Ship::playerInRange(float range, Vector2 playerPos) {
@@ -112,10 +158,10 @@ bool Ship::playerInRange(float range, Vector2 playerPos) {
   return dx * dx + dy * dy < range * range;
 }
 
-Vector2 Ship::distanceFromPlayer(SpacePlayer &player) {
+Vector2 Ship::signedDistance(Entity &entity) {
   return Vector2 {
-    this->getPosition().x - player.getPosition().x,
-    this->getPosition().y - player.getPosition().y
+    this->getPosition().x - entity.getPosition().x,
+    this->getPosition().y - entity.getPosition().y
   };
 }
 
@@ -138,7 +184,8 @@ void Ship::shoot(SpaceWorld &world, float angle) {
   p.setVelocity(vel);
   p.setPosition(pos);
 
-  p.belongsToPlayer = false;
+  p.fromSquad = this->squadId;
+  p.fromShip = this->id;
 
   world.spawnProjectile(p);
 
@@ -146,7 +193,7 @@ void Ship::shoot(SpaceWorld &world, float angle) {
 }
 
 void Ship::shootAt(SpaceWorld &world, Entity entity) {
-  float angle = std::atan2(entity.getPosition().x - this->getPosition().x, entity.getPosition().y - this->getPosition().y);
+  float angle = angleFrom(entity.getPosition(), this->getPosition());
 
   // Add some random noise to the angle to make it more fair (0.0 to 1.0)
   float noise = -0.3 + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(0.6));

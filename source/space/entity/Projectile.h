@@ -21,7 +21,10 @@ class Projectile : public Entity {
     float speed;
     int cooldownFrames;
     int color;
-    bool belongsToPlayer = false;
+    // 0 = player
+    int fromSquad;
+    // 0 = player
+    int fromShip;
 
     time_t lifeStart;
 

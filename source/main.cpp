@@ -130,10 +130,12 @@ int main(void) {
             SCREEN_WIDTH / 2,
             SCREEN_HEIGHT / 2
           };
-
-          float angle = std::atan2(touchXY.px - center.x, touchXY.py - center.y);
+          Vector2 touchVec {
+            touchXY.px,
+            touchXY.py
+          };
           
-          canShootAgainFrame = frame + player.shoot(world, angle);
+          canShootAgainFrame = frame + player.shoot(world, angleFrom(touchVec, center));
         }
       }
     }

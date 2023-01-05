@@ -14,6 +14,7 @@ class SpaceWorld;
 class Ship : public Entity {
   public:
     bool disabled = false;
+    int id = -1;
     int squadId = -1;
     int canShootAgainFrame = 0;
     ProjectileType projectileType;
@@ -34,8 +35,9 @@ class Ship : public Entity {
     Ship(Vector2, Vector2, bool, int);
 
     bool playerInRange(float, Vector2);
-    Vector2 distanceFromPlayer(SpacePlayer&);
+    Vector2 signedDistance(Entity&);
     void update(SpaceWorld&, SpacePlayer&);
+    void moveTo(Entity&);
     void shoot(SpaceWorld&, float);
     void shootAt(SpaceWorld&, Entity);
 

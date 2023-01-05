@@ -42,7 +42,7 @@ bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
 
   // Loop through entities to see if any are being hit
   for (Ship &ship : world.ships) {
-    if (this->belongsToPlayer && hitDetect(ship)) {
+    if ((this->fromSquad != ship.squadId || (this->fromSquad == -1 && this->fromShip != ship.id)) && hitDetect(ship)) {
       ship.removeHealth(world, this->damage);
       hitting = true;
 
@@ -52,7 +52,7 @@ bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
   }
 
   // Check if hitting the player
-  if (!this->belongsToPlayer && hitDetect(player)) {
+  if (!this->fromSquad == 0 && hitDetect(player)) {
     player.removeHealth(this->damage);
     hitting = true;
   }

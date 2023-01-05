@@ -12,4 +12,7 @@ struct Vector3 {
   float z;
 };
 
+float vecDistance(Vector2, Vector2);
+float angleFrom(Vector2, Vector2);
+
 #endif

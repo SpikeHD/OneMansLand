@@ -7,6 +7,7 @@ void spawnSquad(SpaceWorld &world, int shipCount, bool enemy, Vector2 position) 
     -0.3 + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(1.0)) * (SHIP_MAX_VELOCITY),
     -0.3 + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(1.0)) * (SHIP_MAX_VELOCITY)
   };
+  int sid = rand() % 9999;
 
   // Spawn each ship near eachother, around the position spocified
   for (int i = 0; i < shipCount; i++) {
@@ -23,6 +24,7 @@ void spawnSquad(SpaceWorld &world, int shipCount, bool enemy, Vector2 position) 
     Ship s = Ship(spos, ssize, enemy, health);
 
     s.setVelocity(squadVel);
+    s.squadId = sid;
 
     world.spawnShip(s);
   }
