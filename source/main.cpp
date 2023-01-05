@@ -13,6 +13,7 @@
 #include "space/entity/Ship.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
+#include "space/entity/Squad.h"
 
 // For tickrate
 volatile time_t processedTime;
@@ -82,6 +83,9 @@ int main(void) {
   // DEBUG
   int lastFrame = 0;
   int fps = 0;
+
+  // TESTING
+  spawnSquad(world, 3, false, initialPos);
 
   while(1) {
     // Scan for control presses

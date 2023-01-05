@@ -18,9 +18,10 @@ Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
   this->setPosition(position);
   this->setSize(size);
   this->agressive = agressive;
+  this->color = agressive ? RGB15(255, 0, 0) : RGB15(0, 255, 0);
+
 
   this->maxVelocity = 3;
-  this->color = RGB15(255,0,0);
   this->health = health;
 
   this->setHitSize(Vector2 {
@@ -62,6 +63,7 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   cout << "Ship distfromplayer x: " << distFromPlayer.x << endl;
   cout << "Ship distfromplayer y: " << distFromPlayer.y << endl;
   cout << "Ship health: " << this->health << endl;
+  cout << "Ship is aggresive?: " << this->agressive << endl;
 
   if (this->disabled) {
     // Brake until at zero
@@ -88,7 +90,7 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     return;
   }
 
-  if (this->seesPlayer) {
+  if (this->seesPlayer && this->agressive) {
     Vector2 vel = {
       distFromPlayer.x < 0 ? thrust : -thrust,
       distFromPlayer.y < 0 ? thrust : -thrust 
