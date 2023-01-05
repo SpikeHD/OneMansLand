@@ -20,8 +20,7 @@ Ship::Ship(Vector2 position, Vector2 size, bool agressive, int health) {
   this->agressive = agressive;
   this->color = agressive ? RGB15(255, 0, 0) : RGB15(0, 255, 0);
 
-
-  this->maxVelocity = 3;
+  this->maxVelocity = SHIP_MAX_VELOCITY;
   this->health = health;
 
   this->setHitSize(Vector2 {
@@ -155,8 +154,22 @@ void Ship::shootAt(SpaceWorld &world, Entity entity) {
   this->shoot(world, angle + noise);
 }
 
-void Ship::removeHealth(int h) {
+void Ship::removeHealth(SpaceWorld& world, int h) {
   this->health = this->health - h;
+
+  // Make agressive if not already
+  if (!this->agressive) {
+    this->agressive = true;
+
+    // If in a squad, set squad members to aggro as well
+    if (this->squadId) {
+      for (Ship &s : world.ships) {
+        if (s.squadId == this->squadId) {
+          s.agressive = true;
+        }
+      }
+    }
+  }
 
   if (health <= 0) {
     this->health = 0;

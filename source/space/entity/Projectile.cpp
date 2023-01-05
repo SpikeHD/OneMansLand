@@ -43,7 +43,7 @@ bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
   // Loop through entities to see if any are being hit
   for (Ship &ship : world.ships) {
     if (this->belongsToPlayer && hitDetect(ship)) {
-      ship.removeHealth(this->damage);
+      ship.removeHealth(world, this->damage);
       hitting = true;
 
       // Only letting it hit the first thing it hits, rather than multiple things at once

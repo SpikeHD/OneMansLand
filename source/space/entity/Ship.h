@@ -14,6 +14,7 @@ class SpaceWorld;
 class Ship : public Entity {
   public:
     bool disabled = false;
+    int squadId = -1;
     int canShootAgainFrame = 0;
     ProjectileType projectileType;
     float maxProjectiles = 1;
@@ -38,7 +39,7 @@ class Ship : public Entity {
     void shoot(SpaceWorld&, float);
     void shootAt(SpaceWorld&, Entity);
 
-    void removeHealth(int);
+    void removeHealth(SpaceWorld&, int);
     void addHealth(int);
 
   private:
