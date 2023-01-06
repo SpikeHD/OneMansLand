@@ -89,13 +89,6 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     return;
   }
 
-  if (this->seesPlayer && this->agressive) {
-    this->moveTo(player);
-
-    // Shoot at players angle
-    this->shootAt(world, player);
-  }
-
   Ship &closestEnemy = world.ships.at(0);
 
   // Check if we are close to any ships. If so, steer away 
@@ -105,12 +98,6 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     // Shooting at enemies
     if (ship.agressive && ship.squadId != this->squadId) {
       closestEnemy = ship;
-    }
-
-    // Ensure the closestEneemy is actually an enemy, if so, and they are within range, shoot them
-    if (closestEnemy.agressive && ship.squadId != this->squadId && vecDistance(ship.getPosition(), this->getPosition()) < this->radarRange) {
-      this->moveTo(ship);
-      this->shootAt(world, ship);
     }
 
     // Distance flying calculation
@@ -137,6 +124,21 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
     this->setVelocity(dodgeVel);
   }
 
+  bool playerCloser = vecDistance(player.getPosition(), this->getPosition()) < vecDistance(closestEnemy.getPosition(), this->getPosition()); 
+
+  if (this->seesPlayer && this->agressive && playerCloser) {
+    this->moveTo(player);
+
+    // Shoot at players angle
+    this->shootAt(world, player);
+  }
+
+  // Ensure the closestEnemy is actually an enemy, if so, and they are within range, shoot them
+  if (closestEnemy.agressive && closestEnemy.squadId != this->squadId && vecDistance(closestEnemy.getPosition(), this->getPosition()) < this->radarRange) {
+    this->moveTo(closestEnemy);
+    this->shootAt(world, closestEnemy);
+  }
+
   this->setXPosition(this->getPosition().x + this->getVelocity().x);
   this->setYPosition(this->getPosition().y + this->getVelocity().y);
 }
@@ -144,8 +146,8 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
 void Ship::moveTo(Entity &entity) {
   Vector2 distFrom = this->signedDistance(entity);
   Vector2 vel = {
-    distFrom.x < 0 ? thrust : -thrust,
-    distFrom.y < 0 ? thrust : -thrust 
+    (distFrom.x < 0 ? thrust : -thrust),
+    (distFrom.y < 0 ? thrust : -thrust)
   };
 
   // Set new velocity

@@ -63,17 +63,6 @@ int main(void) {
   SpaceWorld world = SpaceWorld();
   world.generate();
 
-  // DEBUG
-  Vector2 enPos = {
-    30.0f, 30.0f
-  };
-  Ship enemy = Ship(enPos, size, true, 50);
-
-  enemy.addXVelocity(0.1f);
-
-  // DEBUG
-  world.spawnShip(enemy);
-
   // Initializes GL2D and stuff
   gl2dInit();
   
@@ -85,7 +74,17 @@ int main(void) {
   int fps = 0;
 
   // TESTING
-  spawnSquad(world, 3, false, initialPos);
+  Vector2 s1p = {
+    initialPos.x - 30,
+    initialPos.y - 30,
+  };
+  Vector2 s2p = {
+    initialPos.x + 30,
+    initialPos.y + 30,
+  };
+
+  spawnSquad(world, 3, true, s1p);
+  spawnSquad(world, 3, false, s2p);
 
   while(1) {
     // Scan for control presses

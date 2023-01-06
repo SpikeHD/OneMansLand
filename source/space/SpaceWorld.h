@@ -11,7 +11,7 @@ class SpaceWorld {
   public:
     float zoomLevel;
     bool landedOnPlanet;
-    int maxProjectiles = 10;
+    int maxProjectiles = 50;
 
     std::vector<Planet> planets;
     std::vector<Ship> ships;
