@@ -60,6 +60,9 @@ int main(void) {
   int canShootAgainFrame = 0;
   touchPosition touchXY;
 
+  // Surface world/player placeholder
+  SurfaceWorld surWorld = SurfaceWorld();
+
   // DEBUG
   WorldState state = WS_PLANET;
 
@@ -69,6 +72,7 @@ int main(void) {
   Vector2 size = {
     5.0f, 5.0f
   };
+
   // The space player
   SpacePlayer player = SpacePlayer(initialPos, size);
   // The spaceworld
@@ -154,7 +158,6 @@ int main(void) {
 
     if (state == WS_PLANET) {
       // TODO
-      SurfaceWorld surWorld = SurfaceWorld();
       surfaceRender(surWorld);
     }
 

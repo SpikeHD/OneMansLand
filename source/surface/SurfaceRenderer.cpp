@@ -1,3 +1,4 @@
+#include <gl2d.h>
 #include "SurfaceRenderer.h"
 
 #include <iostream>
@@ -12,7 +13,7 @@ void surfaceRender(SurfaceWorld &world) {
     std::vector<Tile> tilesAt = world.tiles.at(i);
 
     for (int j = 0; j < tilesAt.size(); j++) {
-      printf("Drawing square at x=%f y=%f", i * 16, j * 16);
+      glBoxFilled(i * tileSizePx, j * tileSizePx, i + tileSizePx, j + tileSizePx, RGB15(255,255,255));
     }
   }
 }
