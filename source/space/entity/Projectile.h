@@ -5,7 +5,7 @@
 #include <ctime>
 #include <string>
 
-#include "Entity.h"
+#include "SpaceEntity.h"
 
 enum ProjectileType {
   PROJECTILE_GATTLING,
@@ -15,7 +15,7 @@ enum ProjectileType {
 class SpaceWorld;
 class SpacePlayer;
 
-class Projectile : public Entity {
+class Projectile : public SpaceEntity {
   public:
     int damage;
     float speed;
@@ -32,8 +32,8 @@ class Projectile : public Entity {
     Projectile(ProjectileType);
 
     void update();
-    bool hittingEntity(SpaceWorld&, SpacePlayer&);
-    bool hitDetect(Entity&);
+    bool hittingSpaceEntity(SpaceWorld&, SpacePlayer&);
+    bool hitDetect(SpaceEntity&);
 };
 
 #endif

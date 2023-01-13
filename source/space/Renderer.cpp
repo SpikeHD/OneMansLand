@@ -7,7 +7,7 @@
 /**
  * Show a triangle pointing to nearby offscreen planets
  */
-void renderPlanetTriangle(Planet &planet, EntityScreenPos &pos, SpacePlayer &player) {
+void renderPlanetTriangle(Planet &planet, SpaceEntityScreenPos &pos, SpacePlayer &player) {
   Vector2 pCenter {
     pos.xMax - ((pos.xMax - pos.xMin) / 2),
     pos.yMax - ((pos.yMax - pos.yMin) / 2)
@@ -25,7 +25,7 @@ void renderPlanetTriangle(Planet &planet, EntityScreenPos &pos, SpacePlayer &pla
   glBoxFilled(tipX, tipY, tipX + size, tipY + size, RGB15(255,255,255));
 }
 
-EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePlayer &player) {
+SpaceEntityScreenPos SpaceEntityScreenPosition(SpaceWorld &world, SpaceEntity &SpaceEntity, SpacePlayer &player) {
   float zoom = world.zoomLevel;
 
   // To make a psuedo-camera, we render the player in the middle and the world in relativity to that
@@ -34,20 +34,20 @@ EntityScreenPos entityScreenPosition(SpaceWorld &world, Entity &entity, SpacePla
   float pScrPosX = (SCREEN_WIDTH / 2);
   float pScrPosY = (SCREEN_HEIGHT / 2);
 
-  Vector2 center = entity.getPosition();
+  Vector2 center = SpaceEntity.getPosition();
   Vector2 centerOffset {
     (zoom * center.x) - pPosX * zoom,
     (zoom * center.y) - pPosY * zoom
   };
 
-  float sizeX = entity.getSize().x * zoom;
-  float sizeY = entity.getSize().y * zoom;
+  float sizeX = SpaceEntity.getSize().x * zoom;
+  float sizeY = SpaceEntity.getSize().y * zoom;
   float calcXMin = center.x + centerOffset.x + pScrPosX - pPosX - (sizeX / 2);
   float calcYMin = center.y + centerOffset.y + pScrPosY - pPosY - (sizeY / 2);
   float calcXMax = center.x + centerOffset.x + pScrPosX - pPosX + (sizeX / 2);
   float calcYMax = center.y + centerOffset.y + pScrPosY - pPosY + (sizeY / 2);
 
-  return EntityScreenPos {
+  return SpaceEntityScreenPos {
     calcXMin,
     calcYMin,
     calcXMax,
@@ -60,7 +60,7 @@ void render(SpaceWorld &world, SpacePlayer &player) {
   
   // Draw other ships
   for (Ship &ship : world.ships) {
-    EntityScreenPos epos = entityScreenPosition(world, ship, player);
+    SpaceEntityScreenPos epos = SpaceEntityScreenPosition(world, ship, player);
     
     glBoxFilled(
       epos.xMin,
@@ -73,7 +73,7 @@ void render(SpaceWorld &world, SpacePlayer &player) {
 
   // Draw projectiles
   for (Projectile &proj : world.projectiles) {
-    EntityScreenPos ppos = entityScreenPosition(world, proj, player);
+    SpaceEntityScreenPos ppos = SpaceEntityScreenPosition(world, proj, player);
     glBoxFilled(
       ppos.xMin,
       ppos.yMin,
@@ -85,7 +85,7 @@ void render(SpaceWorld &world, SpacePlayer &player) {
 
   // Draw each planet
   for (Planet &planet : world.planets) {
-    EntityScreenPos plPos = entityScreenPosition(world, planet, player);
+    SpaceEntityScreenPos plPos = SpaceEntityScreenPosition(world, planet, player);
 
     // Don't bother drawing if outside of screen
     if (

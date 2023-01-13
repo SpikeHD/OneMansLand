@@ -6,14 +6,20 @@
 #include <ctime>
 #include <cmath>
 
-// Our stuff
+// General stuff
 #include "consts.h"
 #include "controls.h"
-#include "space/entity/SpacePlayer.h"
-#include "space/entity/Ship.h"
+
+// Space stuff
+#include "space/SpaceEntity/SpacePlayer.h"
+#include "space/SpaceEntity/Ship.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
-#include "space/entity/Squad.h"
+#include "space/SpaceEntity/Squad.h"
+
+// Surface stuff
+#include "surface/SurfaceWorld.h"
+#include "surface/Renderer.h"
 
 // For tickrate
 volatile time_t processedTime;
@@ -47,10 +53,16 @@ int main(void) {
   // Init RNG
   srand(processedTime);
 
+  int lastFrame = 0;
+
+  // DEBUG
+  int fps = 0;
   int canShootAgainFrame = 0;
   touchPosition touchXY;
 
-  WorldState state = WS_SPACE;
+  // DEBUG
+  WorldState state = WS_PLANET;
+
   Vector2 initialPos = {
     0.0f, 0.0f
   };
@@ -80,12 +92,18 @@ int main(void) {
   // TODO: this is for debugging only
 	consoleDemoInit();
 
-  // DEBUG
-  int lastFrame = 0;
-  int fps = 0;
+  Vector2 squadLeft = {
+    initialPos.x - 30,
+    initialPos.y
+  };
 
-  // TESTING
-  spawnSquad(world, 3, false, initialPos);
+  Vector2 squadRight = {
+    initialPos.x + 30,
+    initialPos.y
+  };
+
+  spawnSquad(world, 3, false, squadLeft);
+  spawnSquad(world, 3, false, squadRight);
 
   while(1) {
     // Scan for control presses
@@ -142,6 +160,8 @@ int main(void) {
 
     if (state == WS_PLANET) {
       // TODO
+      SurfaceWorld surWorld = SurfaceWorld();
+      render(surWorld);
     }
 
     glEnd2D();

@@ -44,7 +44,7 @@ void SpaceWorld::update(SpacePlayer &player) {
     proj.update();
 
     // If the projectile is hitting something, handle it and remove the projectile from the list
-    if (proj.hittingEntity(*this, player)) {
+    if (proj.hittingSpaceEntity(*this, player)) {
       this->projectiles.erase(this->projectiles.begin() + pIdx);
     }
 
