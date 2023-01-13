@@ -13,7 +13,8 @@ void surfaceRender(SurfaceWorld &world) {
     std::vector<Tile> tilesAt = world.tiles.at(i);
 
     for (int j = 0; j < tilesAt.size(); j++) {
-      glBoxFilled(i * tileSizePx, j * tileSizePx, i + tileSizePx, j + tileSizePx, RGB15(255,255,255));
+      Tile t = tilesAt.at(j);
+      glBoxFilled(i * tileSizePx, j * tileSizePx, (i * tileSizePx) + tileSizePx, (j * tileSizePx) + tileSizePx, t.getColor());
     }
   }
 }
