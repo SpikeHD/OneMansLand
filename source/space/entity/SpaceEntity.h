@@ -1,12 +1,12 @@
-#ifndef SPC_ENTITY_H
-#define SPC_ENTITY_H
+#ifndef SPC_SPACE_ENTITY_H
+#define SPC_SPACE_ENTITIY_H
 
 #include <string>
 #include "./../../Vector.h"
 
 using namespace std;
 
-class Entity {
+class SpaceEntity {
   public:
     int color;
     float maxVelocity = 2;

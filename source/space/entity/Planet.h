@@ -4,10 +4,10 @@
 #include <string>
 
 #include "../../Vector.h"
-#include "Entity.h"
+#include "SpaceEntity.h"
 
 using namespace std;
-class Planet : public Entity {
+class Planet : public SpaceEntity {
   public:
     int seed;
     int color;
@@ -18,10 +18,10 @@ class Planet : public Entity {
     void update() {};
 
     int gravitationalFieldSize();
-    void pull(Entity &);
-    float distanceFrom(Entity);
-    bool isInField(Entity);
-    float pullForce(Entity);
+    void pull(SpaceEntity &);
+    float distanceFrom(SpaceEntity);
+    bool isInField(SpaceEntity);
+    float pullForce(SpaceEntity);
 };
 
 #endif

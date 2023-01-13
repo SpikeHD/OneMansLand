@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Entity.h"
+#include "SpaceEntity.h"
 #include "Projectile.h"
 
 extern int frame;
@@ -11,7 +11,7 @@ extern int frame;
 class SpacePlayer;
 class SpaceWorld;
 
-class Ship : public Entity {
+class Ship : public SpaceEntity {
   public:
     bool disabled = false;
     int id = -1;
@@ -35,11 +35,11 @@ class Ship : public Entity {
     Ship(Vector2, Vector2, bool, int);
 
     bool playerInRange(float, Vector2);
-    Vector2 signedDistance(Entity&);
+    Vector2 signedDistance(SpaceEntity&);
     void update(SpaceWorld&, SpacePlayer&);
-    void moveTo(Entity&);
+    void moveTo(SpaceEntity&);
     void shoot(SpaceWorld&, float);
-    void shootAt(SpaceWorld&, Entity);
+    void shootAt(SpaceWorld&, SpaceEntity);
 
     void removeHealth(SpaceWorld&, int);
     void addHealth(int);

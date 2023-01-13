@@ -1,7 +1,7 @@
 #include <cmath>
 
 #include "Planet.h"
-#include "Entity.h"
+#include "SpaceEntity.h"
 
 Planet::Planet(Vector2 position, float size, string name, int color) {
   this->position = position;
@@ -23,41 +23,41 @@ int Planet::gravitationalFieldSize() {
   return this->size.x * 2;
 }
 
-void Planet::pull(Entity &entity) {
-  bool inField = this->isInField(entity);
-  float pullforce = this->pullForce(entity);
+void Planet::pull(SpaceEntity &SpaceEntity) {
+  bool inField = this->isInField(SpaceEntity);
+  float pullforce = this->pullForce(SpaceEntity);
 
   if (!inField) pullforce = 0;
 
   float xPullforce = pullforce;
   float yPullforce = pullforce;
 
-  if (entity.getPosition().x > this->position.x) xPullforce = -pullforce;
-  if (entity.getPosition().y > this->position.y) yPullforce = -pullforce;
+  if (SpaceEntity.getPosition().x > this->position.x) xPullforce = -pullforce;
+  if (SpaceEntity.getPosition().y > this->position.y) yPullforce = -pullforce;
 
-  entity.addXVelocity(xPullforce);
-  entity.addYVelocity(yPullforce);
+  SpaceEntity.addXVelocity(xPullforce);
+  SpaceEntity.addYVelocity(yPullforce);
 }
 
-float Planet::distanceFrom(Entity entity) {
+float Planet::distanceFrom(SpaceEntity SpaceEntity) {
   return sqrtf(
-    powf(entity.getPosition().x - this->position.x, 2) +
-    powf(entity.getPosition().y - this->position.y, 2)
+    powf(SpaceEntity.getPosition().x - this->position.x, 2) +
+    powf(SpaceEntity.getPosition().y - this->position.y, 2)
   );
 }
 
-bool Planet::isInField(Entity entity) {
-  float distFrom = this->distanceFrom(entity);
+bool Planet::isInField(SpaceEntity SpaceEntity) {
+  float distFrom = this->distanceFrom(SpaceEntity);
   return distFrom < this->gravitationalFieldSize(); 
 }
 
 /**
  * All of this calculation is super approximate and bad because it doesn't matter
  */
-float Planet::pullForce(Entity entity) {
+float Planet::pullForce(SpaceEntity SpaceEntity) {
   // formula: F = G * (m1 * m2) / r2
-  float approxSize = sqrtf(entity.getSize().x + entity.getSize().y);
-  float distBetween = this->distanceFrom(entity);
+  float approxSize = sqrtf(SpaceEntity.getSize().x + SpaceEntity.getSize().y);
+  float distBetween = this->distanceFrom(SpaceEntity);
 
   return 0.001 * ((approxSize * this->size.x) / distBetween);
 }

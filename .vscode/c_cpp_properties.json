@@ -7,7 +7,7 @@
                 "${vcpkgRoot}/x64-windows/include",
                 "${vcpkgRoot}/x64-windows-static/include",
                 "D:/devkitPro/**",
-                "/opt/devkitpro/**"
+                "/opt/devkitpro/**/*"
             ],
             "defines": [
                 "_DEBUG",
@@ -18,7 +18,8 @@
             "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.23.28105/bin/Hostx64/x64/cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64"
+            "intelliSenseMode": "windows-msvc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
         },
         {
             "name": "Linux",

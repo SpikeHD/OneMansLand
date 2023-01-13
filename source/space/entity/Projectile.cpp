@@ -37,7 +37,7 @@ void Projectile::update() {
   this->setYPosition(this->getPosition().y + this->getVelocity().y);
 }
 
-bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
+bool Projectile::hittingSpaceEntity(SpaceWorld &world, SpacePlayer &player) {
   bool hitting = false;
 
   // Loop through entities to see if any are being hit
@@ -60,9 +60,9 @@ bool Projectile::hittingEntity(SpaceWorld &world, SpacePlayer &player) {
   return hitting;
 }
 
-bool Projectile::hitDetect(Entity &entity) {
-  return this->getPosition().x > entity.getPosition().x - entity.getHitSize().x &&
-    this->getPosition().x < entity.getPosition().x + entity.getSize().x + entity.getHitSize().x &&
-    this->getPosition().y > entity.getPosition().y - entity.getHitSize().y &&
-    this->getPosition().y < entity.getPosition().y + entity.getSize().y + entity.getHitSize().y;
+bool Projectile::hitDetect(SpaceEntity &SpaceEntity) {
+  return this->getPosition().x > SpaceEntity.getPosition().x - SpaceEntity.getHitSize().x &&
+    this->getPosition().x < SpaceEntity.getPosition().x + SpaceEntity.getSize().x + SpaceEntity.getHitSize().x &&
+    this->getPosition().y > SpaceEntity.getPosition().y - SpaceEntity.getHitSize().y &&
+    this->getPosition().y < SpaceEntity.getPosition().y + SpaceEntity.getSize().y + SpaceEntity.getHitSize().y;
 }

@@ -143,8 +143,8 @@ void Ship::update(SpaceWorld &world, SpacePlayer &player) {
   this->setYPosition(this->getPosition().y + this->getVelocity().y);
 }
 
-void Ship::moveTo(Entity &entity) {
-  Vector2 distFrom = this->signedDistance(entity);
+void Ship::moveTo(SpaceEntity &SpaceEntity) {
+  Vector2 distFrom = this->signedDistance(SpaceEntity);
   Vector2 vel = {
     (distFrom.x < 0 ? thrust : -thrust),
     (distFrom.y < 0 ? thrust : -thrust)
@@ -160,17 +160,17 @@ bool Ship::playerInRange(float range, Vector2 playerPos) {
   return dx * dx + dy * dy < range * range;
 }
 
-Vector2 Ship::signedDistance(Entity &entity) {
+Vector2 Ship::signedDistance(SpaceEntity &SpaceEntity) {
   return Vector2 {
-    this->getPosition().x - entity.getPosition().x,
-    this->getPosition().y - entity.getPosition().y
+    this->getPosition().x - SpaceEntity.getPosition().x,
+    this->getPosition().y - SpaceEntity.getPosition().y
   };
 }
 
 void Ship::shoot(SpaceWorld &world, float angle) {
   if (frame < this->canShootAgainFrame || this->disabled) return;
 
-  // Create projectile entity from the base provided projectile
+  // Create projectile SpaceEntity from the base provided projectile
   Projectile p = Projectile(this->projectileType);
 
   Vector2 vel = {
@@ -194,8 +194,8 @@ void Ship::shoot(SpaceWorld &world, float angle) {
   this->canShootAgainFrame = frame + p.cooldownFrames;
 }
 
-void Ship::shootAt(SpaceWorld &world, Entity entity) {
-  float angle = angleFrom(entity.getPosition(), this->getPosition());
+void Ship::shootAt(SpaceWorld &world, SpaceEntity SpaceEntity) {
+  float angle = angleFrom(SpaceEntity.getPosition(), this->getPosition());
 
   // Add some random noise to the angle to make it more fair (0.0 to 1.0)
   float noise = -0.3 + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(0.6));

@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Entity.h"
+#include "SpaceEntity.h"
 #include "Projectile.h"
 #include "Planet.h"
 
@@ -11,7 +11,7 @@ using namespace std;
 
 class SpaceWorld;
 
-class SpacePlayer : public Entity {
+class SpacePlayer : public SpaceEntity {
   public:
     ProjectileType projectileType;
 

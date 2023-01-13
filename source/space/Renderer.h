@@ -2,10 +2,10 @@
 #define SPC_RENDER_H
 
 #include "SpaceWorld.h"
-#include "entity/SpacePlayer.h"
-#include "entity/Ship.h"
+#include "SpaceEntity/SpacePlayer.h"
+#include "SpaceEntity/Ship.h"
 
-struct EntityScreenPos {
+struct SpaceEntityScreenPos {
   float xMin;
   float yMin;
   float xMax;
@@ -13,6 +13,6 @@ struct EntityScreenPos {
 };
 
 void render(SpaceWorld&, SpacePlayer&);
-EntityScreenPos entityScreenPosition(SpaceWorld&, Entity&, SpacePlayer&);
+SpaceEntityScreenPos SpaceEntityScreenPosition(SpaceWorld&, SpaceEntity&, SpacePlayer&);
 
 #endif

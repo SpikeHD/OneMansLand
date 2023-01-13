@@ -90,7 +90,7 @@ void SpacePlayer::control(SpaceWorld &world) {
 }
 
 bool SpacePlayer::collidingWithPlanet(SpaceWorld world, Planet planet) {
-  EntityScreenPos plPos = entityScreenPosition(world, planet, *this);
+  SpaceEntityScreenPos plPos = SpaceEntityScreenPosition(world, planet, *this);
 
   int SCR_X_HALF = SCREEN_WIDTH / 2;
   int SCR_Y_HALF = SCREEN_HEIGHT / 2;
@@ -132,7 +132,7 @@ void SpacePlayer::update(SpaceWorld &world) {
 }
 
 int SpacePlayer::shoot(SpaceWorld &world, float angle) {
-  // Create projectile entity from the base provided projectile
+  // Create projectile SpaceEntity from the base provided projectile
   Projectile p = Projectile(PROJECTILE_GATTLING);
 
   Vector2 vel = {
