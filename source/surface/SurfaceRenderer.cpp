@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void render(SurfaceWorld world) {
+void surfaceRender(SurfaceWorld &world) {
   int tileSizePx = 16;
   int tileRow = 0;
   int tileCol = 0;
