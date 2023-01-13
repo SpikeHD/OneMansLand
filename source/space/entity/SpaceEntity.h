@@ -1,5 +1,5 @@
 #ifndef SPC_SPACE_ENTITY_H
-#define SPC_SPACE_ENTITIY_H
+#define SPC_SPACE_ENTITY_H
 
 #include <string>
 #include "./../../Vector.h"

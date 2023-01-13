@@ -2,8 +2,8 @@
 #define SPC_RENDER_H
 
 #include "SpaceWorld.h"
-#include "SpaceEntity/SpacePlayer.h"
-#include "SpaceEntity/Ship.h"
+#include "entity/SpacePlayer.h"
+#include "entity/Ship.h"
 
 struct SpaceEntityScreenPos {
   float xMin;

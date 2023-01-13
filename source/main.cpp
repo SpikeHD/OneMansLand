@@ -11,11 +11,11 @@
 #include "controls.h"
 
 // Space stuff
-#include "space/SpaceEntity/SpacePlayer.h"
-#include "space/SpaceEntity/Ship.h"
+#include "space/entity/SpacePlayer.h"
+#include "space/entity/Ship.h"
 #include "space/Renderer.h"
 #include "space/SpaceWorld.h"
-#include "space/SpaceEntity/Squad.h"
+#include "space/entity/Squad.h"
 
 // Surface stuff
 #include "surface/SurfaceWorld.h"

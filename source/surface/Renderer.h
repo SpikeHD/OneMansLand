@@ -3,6 +3,6 @@
 
 #include "SurfaceWorld.h"
 
-void render(SurfaceWorld);
+void render(SurfaceWorld&);
 
 #endif
