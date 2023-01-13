@@ -12,7 +12,7 @@ struct SpaceEntityScreenPos {
   float yMax;
 };
 
-void render(SpaceWorld&, SpacePlayer&);
+void spaceRender(SpaceWorld&, SpacePlayer&);
 SpaceEntityScreenPos SpaceEntityScreenPosition(SpaceWorld&, SpaceEntity&, SpacePlayer&);
 
 #endif

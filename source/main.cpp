@@ -13,13 +13,13 @@
 // Space stuff
 #include "space/entity/SpacePlayer.h"
 #include "space/entity/Ship.h"
-#include "space/Renderer.h"
+#include "space/SpaceRenderer.h"
 #include "space/SpaceWorld.h"
 #include "space/entity/Squad.h"
 
 // Surface stuff
 #include "surface/SurfaceWorld.h"
-#include "surface/Renderer.h"
+#include "surface/SurfaceRenderer.h"
 
 // For tickrate
 volatile time_t processedTime;
@@ -124,7 +124,7 @@ int main(void) {
     if (state == WS_SPACE) {
       cout << "World projectiles: " << world.projectiles.size() << endl;
 
-      render(world, player);
+      spaceRender(world, player);
 
       player.control(world);
       player.update(world);
@@ -155,7 +155,7 @@ int main(void) {
     if (state == WS_PLANET) {
       // TODO
       SurfaceWorld surWorld = SurfaceWorld();
-      render(surWorld);
+      surfaceRender(surWorld);
     }
 
     glEnd2D();

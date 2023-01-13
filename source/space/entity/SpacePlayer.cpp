@@ -9,7 +9,7 @@
 #include "SpacePlayer.h"
 #include "../SpaceWorld.h"
 #include "../../controls.h"
-#include "../Renderer.h"
+#include "../SpaceRenderer.h"
 #include "../../consts.h"
 
 // TODO < 0.2 velocity should be a acrash, less is a landing

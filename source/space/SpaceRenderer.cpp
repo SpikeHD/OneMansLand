@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "Renderer.h"
+#include "SpaceRenderer.h"
 
 /**
  * Show a triangle pointing to nearby offscreen planets
